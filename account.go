@@ -89,8 +89,9 @@ type AccountExternalAccountType string
 
 // List of values that AccountExternalAccountType can take
 const (
-	AccountExternalAccountTypeBankAccount AccountExternalAccountType = "bank_account"
-	AccountExternalAccountTypeCard        AccountExternalAccountType = "card"
+	AccountExternalAccountTypeBankAccount       AccountExternalAccountType = "bank_account"
+	AccountExternalAccountTypeCard              AccountExternalAccountType = "card"
+	AccountExternalAccountTypeBlockchainAddress AccountExternalAccountType = "blockchain_address"
 )
 
 // If the account is disabled, this string describes why. Can be `requirements.past_due`, `requirements.pending_verification`, `listed`, `platform_paused`, `rejected.fraud`, `rejected.listed`, `rejected.terms_of_service`, `rejected.other`, `under_review`, or `other`.
@@ -1238,8 +1239,9 @@ type AccountExternalAccount struct {
 	ID   string                     `json:"id"`
 	Type AccountExternalAccountType `json:"object"`
 
-	BankAccount *BankAccount `json:"-"`
-	Card        *Card        `json:"-"`
+	BankAccount       *BankAccount       `json:"-"`
+	Card              *Card              `json:"-"`
+	BlockchainAddress *BlockchainAddress `json:"-"`
 }
 
 // AccountList is a list of Accounts as retrieved from a list endpoint.
@@ -1302,6 +1304,8 @@ func (a *AccountExternalAccount) UnmarshalJSON(data []byte) error {
 		err = json.Unmarshal(data, &a.BankAccount)
 	case AccountExternalAccountTypeCard:
 		err = json.Unmarshal(data, &a.Card)
+	case AccountExternalAccountTypeBlockchainAddress:
+		err = json.Unmarshal(data, &a.BlockchainAddress)
 	}
 	return err
 }
