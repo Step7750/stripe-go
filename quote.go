@@ -41,6 +41,56 @@ const (
 	QuoteComputedRecurringIntervalYear  QuoteComputedRecurringInterval = "year"
 )
 
+// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+type QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason string
+
+// List of values that QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason can take
+const (
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonCustomerExempt          QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "customer_exempt"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonExcludedTerritory       QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "excluded_territory"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonJurisdictionUnsupported QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "jurisdiction_unsupported"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonNotCollecting           QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "not_collecting"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonNotSubjectToTax         QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "not_subject_to_tax"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonNotSupported            QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "not_supported"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonPortionProductExempt    QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "portion_product_exempt"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonPortionReducedRated     QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "portion_reduced_rated"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonPortionStandardRated    QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "portion_standard_rated"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonProductExempt           QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "product_exempt"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonProductExemptHoliday    QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "product_exempt_holiday"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonProportionallyRated     QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "proportionally_rated"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonReducedRated            QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "reduced_rated"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonReverseCharge           QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "reverse_charge"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonStandardRated           QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "standard_rated"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonTaxableBasisReduced     QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "taxable_basis_reduced"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonVATExempt               QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "vat_exempt"
+	QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReasonZeroRated               QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason = "zero_rated"
+)
+
+// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+type QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason string
+
+// List of values that QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason can take
+const (
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonCustomerExempt          QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "customer_exempt"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonExcludedTerritory       QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "excluded_territory"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonJurisdictionUnsupported QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "jurisdiction_unsupported"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonNotCollecting           QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "not_collecting"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonNotSubjectToTax         QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "not_subject_to_tax"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonNotSupported            QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "not_supported"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonPortionProductExempt    QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "portion_product_exempt"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonPortionReducedRated     QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "portion_reduced_rated"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonPortionStandardRated    QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "portion_standard_rated"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonProductExempt           QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "product_exempt"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonProductExemptHoliday    QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "product_exempt_holiday"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonProportionallyRated     QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "proportionally_rated"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonReducedRated            QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "reduced_rated"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonReverseCharge           QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "reverse_charge"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonStandardRated           QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "standard_rated"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonTaxableBasisReduced     QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "taxable_basis_reduced"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonVATExempt               QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "vat_exempt"
+	QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReasonZeroRated               QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason = "zero_rated"
+)
+
 // The status of the quote.
 type QuoteStatus string
 
@@ -52,12 +102,37 @@ const (
 	QuoteStatusOpen     QuoteStatus = "open"
 )
 
+// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+type QuoteTotalDetailsBreakdownTaxTaxabilityReason string
+
+// List of values that QuoteTotalDetailsBreakdownTaxTaxabilityReason can take
+const (
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonCustomerExempt          QuoteTotalDetailsBreakdownTaxTaxabilityReason = "customer_exempt"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonExcludedTerritory       QuoteTotalDetailsBreakdownTaxTaxabilityReason = "excluded_territory"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonJurisdictionUnsupported QuoteTotalDetailsBreakdownTaxTaxabilityReason = "jurisdiction_unsupported"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonNotCollecting           QuoteTotalDetailsBreakdownTaxTaxabilityReason = "not_collecting"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonNotSubjectToTax         QuoteTotalDetailsBreakdownTaxTaxabilityReason = "not_subject_to_tax"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonNotSupported            QuoteTotalDetailsBreakdownTaxTaxabilityReason = "not_supported"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonPortionProductExempt    QuoteTotalDetailsBreakdownTaxTaxabilityReason = "portion_product_exempt"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonPortionReducedRated     QuoteTotalDetailsBreakdownTaxTaxabilityReason = "portion_reduced_rated"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonPortionStandardRated    QuoteTotalDetailsBreakdownTaxTaxabilityReason = "portion_standard_rated"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonProductExempt           QuoteTotalDetailsBreakdownTaxTaxabilityReason = "product_exempt"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonProductExemptHoliday    QuoteTotalDetailsBreakdownTaxTaxabilityReason = "product_exempt_holiday"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonProportionallyRated     QuoteTotalDetailsBreakdownTaxTaxabilityReason = "proportionally_rated"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonReducedRated            QuoteTotalDetailsBreakdownTaxTaxabilityReason = "reduced_rated"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonReverseCharge           QuoteTotalDetailsBreakdownTaxTaxabilityReason = "reverse_charge"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonStandardRated           QuoteTotalDetailsBreakdownTaxTaxabilityReason = "standard_rated"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonTaxableBasisReduced     QuoteTotalDetailsBreakdownTaxTaxabilityReason = "taxable_basis_reduced"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonVATExempt               QuoteTotalDetailsBreakdownTaxTaxabilityReason = "vat_exempt"
+	QuoteTotalDetailsBreakdownTaxTaxabilityReasonZeroRated               QuoteTotalDetailsBreakdownTaxTaxabilityReason = "zero_rated"
+)
+
 // Retrieves the quote with the given ID.
 type QuoteParams struct {
 	Params `form:"*"`
 	// The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. There cannot be any line items with recurring prices when using this field.
 	ApplicationFeeAmount *int64 `form:"application_fee_amount"`
-	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. There must be at least 1 line item with a recurring price to use this field.
+	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. There must be at least 1 line item with a recurring price to use this field.
 	ApplicationFeePercent *float64 `form:"application_fee_percent"`
 	// Settings for automatic tax lookup for this quote and resulting invoices and subscriptions.
 	AutomaticTax *QuoteAutomaticTaxParams `form:"automatic_tax"`
@@ -129,7 +204,7 @@ type QuoteLineItemPriceDataParams struct {
 	Product *string `form:"product"`
 	// The recurring components of a price such as `interval` and `interval_count`.
 	Recurring *QuoteLineItemPriceDataRecurringParams `form:"recurring"`
-	// Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+	// Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
 	TaxBehavior *string `form:"tax_behavior"`
 	// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
 	UnitAmount *int64 `form:"unit_amount"`
@@ -173,7 +248,7 @@ func (q *QuoteSubscriptionDataParams) AppendTo(body *form.Values, keyParts []str
 type QuoteTransferDataParams struct {
 	// The amount that will be transferred automatically when the invoice is paid. If no amount is set, the full amount is transferred. There cannot be any line items with recurring prices when using this field.
 	Amount *int64 `form:"amount"`
-	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount is transferred to the destination. There must be at least 1 line item with a recurring price to use this field.
+	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount is transferred to the destination. There must be at least 1 line item with a recurring price to use this field.
 	AmountPercent *float64 `form:"amount_percent"`
 	// ID of an existing, connected Stripe account.
 	Destination *string `form:"destination"`
@@ -245,7 +320,7 @@ type QuoteComputedRecurringTotalDetailsBreakdownDiscount struct {
 	// A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
 	// It contains information about when the discount began, when it will end, and what it is applied to.
 	//
-	// Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
+	// Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
 	Discount *Discount `json:"discount"`
 }
 
@@ -255,8 +330,12 @@ type QuoteComputedRecurringTotalDetailsBreakdownTax struct {
 	Amount int64 `json:"amount"`
 	// Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
 	//
-	// Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+	// Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
 	Rate *TaxRate `json:"rate"`
+	// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+	TaxabilityReason QuoteComputedRecurringTotalDetailsBreakdownTaxTaxabilityReason `json:"taxability_reason"`
+	// The amount on which tax is calculated, in cents (or local equivalent).
+	TaxableAmount int64 `json:"taxable_amount"`
 }
 type QuoteComputedRecurringTotalDetailsBreakdown struct {
 	// The aggregated discounts.
@@ -294,7 +373,7 @@ type QuoteComputedUpfrontTotalDetailsBreakdownDiscount struct {
 	// A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
 	// It contains information about when the discount began, when it will end, and what it is applied to.
 	//
-	// Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
+	// Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
 	Discount *Discount `json:"discount"`
 }
 
@@ -304,8 +383,12 @@ type QuoteComputedUpfrontTotalDetailsBreakdownTax struct {
 	Amount int64 `json:"amount"`
 	// Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
 	//
-	// Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+	// Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
 	Rate *TaxRate `json:"rate"`
+	// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+	TaxabilityReason QuoteComputedUpfrontTotalDetailsBreakdownTaxTaxabilityReason `json:"taxability_reason"`
+	// The amount on which tax is calculated, in cents (or local equivalent).
+	TaxableAmount int64 `json:"taxable_amount"`
 }
 type QuoteComputedUpfrontTotalDetailsBreakdown struct {
 	// The aggregated discounts.
@@ -374,7 +457,7 @@ type QuoteTotalDetailsBreakdownDiscount struct {
 	// A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
 	// It contains information about when the discount began, when it will end, and what it is applied to.
 	//
-	// Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
+	// Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
 	Discount *Discount `json:"discount"`
 }
 
@@ -384,8 +467,12 @@ type QuoteTotalDetailsBreakdownTax struct {
 	Amount int64 `json:"amount"`
 	// Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
 	//
-	// Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+	// Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
 	Rate *TaxRate `json:"rate"`
+	// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+	TaxabilityReason QuoteTotalDetailsBreakdownTaxTaxabilityReason `json:"taxability_reason"`
+	// The amount on which tax is calculated, in cents (or local equivalent).
+	TaxableAmount int64 `json:"taxable_amount"`
 }
 type QuoteTotalDetailsBreakdown struct {
 	// The aggregated discounts.
@@ -405,9 +492,9 @@ type QuoteTotalDetails struct {
 
 // The account (if any) the payments will be attributed to for tax reporting, and where funds from each payment will be transferred to for each of the invoices.
 type QuoteTransferData struct {
-	// The amount in %s that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
+	// The amount in cents (or local equivalent) that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
 	Amount int64 `json:"amount"`
-	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the destination account. By default, the entire amount will be transferred to the destination.
+	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the destination account. By default, the entire amount will be transferred to the destination.
 	AmountPercent float64 `json:"amount_percent"`
 	// The account where funds from the payment will be transferred to upon payment success.
 	Destination *Account `json:"destination"`
@@ -425,7 +512,7 @@ type Quote struct {
 	Application *Application `json:"application"`
 	// The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. Only applicable if there are no line items with recurring prices on the quote.
 	ApplicationFeeAmount int64 `json:"application_fee_amount"`
-	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. Only applicable if there are line items with recurring prices on the quote.
+	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. Only applicable if there are line items with recurring prices on the quote.
 	ApplicationFeePercent float64            `json:"application_fee_percent"`
 	AutomaticTax          *QuoteAutomaticTax `json:"automatic_tax"`
 	// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay invoices at the end of the subscription cycle or on finalization using the default payment method attached to the subscription or customer. When sending an invoice, Stripe will email your customer an invoice with payment instructions and mark the subscription as `active`. Defaults to `charge_automatically`.

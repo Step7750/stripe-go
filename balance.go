@@ -17,7 +17,8 @@ const (
 )
 
 // Retrieves the current account balance, based on the authentication that was used to make the request.
-//  For a sample request, see [Accounting for negative balances](https://stripe.com/docs/connect/account-balances#accounting-for-negative-balances).
+//
+//	For a sample request, see [Accounting for negative balances](https://stripe.com/docs/connect/account-balances#accounting-for-negative-balances).
 type BalanceParams struct {
 	Params `form:"*"`
 }
@@ -45,7 +46,7 @@ type BalanceIssuing struct {
 // The available and pending amounts for each currency are broken down further by
 // payment source types.
 //
-// Related guide: [Understanding Connect Account Balances](https://stripe.com/docs/connect/account-balances).
+// Related guide: [Understanding Connect account balances](https://stripe.com/docs/connect/account-balances)
 type Balance struct {
 	APIResource
 	// Funds that are available to be transferred or paid out, whether automatically by Stripe or explicitly via the [Transfers API](https://stripe.com/docs/api#transfers) or [Payouts API](https://stripe.com/docs/api#payouts). The available balance for each currency and payment type can be found in the `source_types` property.
@@ -59,6 +60,6 @@ type Balance struct {
 	Livemode bool `json:"livemode"`
 	// String representing the object's type. Objects of the same type share the same value.
 	Object string `json:"object"`
-	// Funds that are not yet available in the balance, due to the 7-day rolling pay cycle. The pending balance for each currency, and for each payment type, can be found in the `source_types` property.
+	// Funds that are not yet available in the balance. The pending balance for each currency, and for each payment type, can be found in the `source_types` property.
 	Pending []*Amount `json:"pending"`
 }

@@ -7,8 +7,9 @@
 package stripe
 
 // Status of this report run. This will be `pending` when the run is initially created.
-//  When the run finishes, this will be set to `succeeded` and the `result` field will be populated.
-//  Rarely, we may encounter an error, at which point this will be set to `failed` and the `error` field will be populated.
+//
+//	When the run finishes, this will be set to `succeeded` and the `result` field will be populated.
+//	Rarely, we may encounter an error, at which point this will be set to `failed` and the `error` field will be populated.
 type ReportingReportRunStatus string
 
 // List of values that ReportingReportRunStatus can take
@@ -60,9 +61,9 @@ type ReportingReportRunParameters struct {
 	ConnectedAccount string `json:"connected_account"`
 	// Currency of objects to be included in the report run.
 	Currency Currency `json:"currency"`
-	// Ending timestamp of data to be included in the report run (exclusive).
+	// Ending timestamp of data to be included in the report run. Can be any UTC timestamp between 1 second after the user specified `interval_start` and 1 second before this report's last `data_available_end` value.
 	IntervalEnd int64 `json:"interval_end"`
-	// Starting timestamp of data to be included in the report run.
+	// Starting timestamp of data to be included in the report run. Can be any UTC timestamp between 1 second after this report's `data_available_start` and 1 second before the user specified `interval_end` value.
 	IntervalStart int64 `json:"interval_start"`
 	// Payout ID by which to filter the report run.
 	Payout string `json:"payout"`

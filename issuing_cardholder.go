@@ -8,14 +8,29 @@ package stripe
 
 import "encoding/json"
 
+// The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
+//
+//	This changes the language of the [3D Secure flow](https://stripe.com/docs/issuing/3d-secure) and one-time password messages sent to the cardholder.
+type IssuingCardholderPreferredLocale string
+
+// List of values that IssuingCardholderPreferredLocale can take
+const (
+	IssuingCardholderPreferredLocaleDE IssuingCardholderPreferredLocale = "de"
+	IssuingCardholderPreferredLocaleEN IssuingCardholderPreferredLocale = "en"
+	IssuingCardholderPreferredLocaleES IssuingCardholderPreferredLocale = "es"
+	IssuingCardholderPreferredLocaleFR IssuingCardholderPreferredLocale = "fr"
+	IssuingCardholderPreferredLocaleIT IssuingCardholderPreferredLocale = "it"
+)
+
 // If `disabled_reason` is present, all cards will decline authorizations with `cardholder_verification_required` reason.
 type IssuingCardholderRequirementsDisabledReason string
 
 // List of values that IssuingCardholderRequirementsDisabledReason can take
 const (
-	IssuingCardholderRequirementsDisabledReasonListed         IssuingCardholderRequirementsDisabledReason = "listed"
-	IssuingCardholderRequirementsDisabledReasonRejectedListed IssuingCardholderRequirementsDisabledReason = "rejected.listed"
-	IssuingCardholderRequirementsDisabledReasonUnderReview    IssuingCardholderRequirementsDisabledReason = "under_review"
+	IssuingCardholderRequirementsDisabledReasonListed              IssuingCardholderRequirementsDisabledReason = "listed"
+	IssuingCardholderRequirementsDisabledReasonRejectedListed      IssuingCardholderRequirementsDisabledReason = "rejected.listed"
+	IssuingCardholderRequirementsDisabledReasonRequirementsPastDue IssuingCardholderRequirementsDisabledReason = "requirements.past_due"
+	IssuingCardholderRequirementsDisabledReasonUnderReview         IssuingCardholderRequirementsDisabledReason = "under_review"
 )
 
 // Interval (or event) to which the amount applies.
@@ -41,7 +56,7 @@ const (
 	IssuingCardholderStatusInactive IssuingCardholderStatus = "inactive"
 )
 
-// One of `individual` or `company`.
+// One of `individual` or `company`. See [Choose a cardholder type](https://stripe.com/docs/issuing/other/choose-cardholder) for more details.
 type IssuingCardholderType string
 
 // List of values that IssuingCardholderType can take
@@ -79,7 +94,23 @@ type IssuingCardholderCompanyParams struct {
 	TaxID *string `form:"tax_id"`
 }
 
-// The date of birth of this cardholder.
+// Information about cardholder acceptance of [Authorized User Terms](https://stripe.com/docs/issuing/cards).
+type IssuingCardholderIndividualCardIssuingUserTermsAcceptanceParams struct {
+	// The Unix timestamp marking when the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+	Date *int64 `form:"date"`
+	// The IP address from which the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
+	IP *string `form:"ip"`
+	// The user agent of the browser from which the cardholder accepted the Authorized User Terms.
+	UserAgent *string `form:"user_agent"`
+}
+
+// Information related to the card_issuing program for this cardholder.
+type IssuingCardholderIndividualCardIssuingParams struct {
+	// Information about cardholder acceptance of [Authorized User Terms](https://stripe.com/docs/issuing/cards).
+	UserTermsAcceptance *IssuingCardholderIndividualCardIssuingUserTermsAcceptanceParams `form:"user_terms_acceptance"`
+}
+
+// The date of birth of this cardholder. Cardholders must be older than 13 years old.
 type IssuingCardholderIndividualDOBParams struct {
 	// The day of birth, between 1 and 31.
 	Day *int64 `form:"day"`
@@ -105,11 +136,13 @@ type IssuingCardholderIndividualVerificationParams struct {
 
 // Additional information about an `individual` cardholder.
 type IssuingCardholderIndividualParams struct {
-	// The date of birth of this cardholder.
+	// Information related to the card_issuing program for this cardholder.
+	CardIssuing *IssuingCardholderIndividualCardIssuingParams `form:"card_issuing"`
+	// The date of birth of this cardholder. Cardholders must be older than 13 years old.
 	DOB *IssuingCardholderIndividualDOBParams `form:"dob"`
-	// The first name of this cardholder. This field cannot contain any special characters or numbers.
+	// The first name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
 	FirstName *string `form:"first_name"`
-	// The last name of this cardholder. This field cannot contain any special characters or numbers.
+	// The last name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
 	LastName *string `form:"last_name"`
 	// Government-issued ID document for this cardholder.
 	Verification *IssuingCardholderIndividualVerificationParams `form:"verification"`
@@ -152,11 +185,14 @@ type IssuingCardholderParams struct {
 	Name *string `form:"name"`
 	// The cardholder's phone number. This is required for all cardholders who will be creating EU cards. See the [3D Secure documentation](https://stripe.com/docs/issuing/3d-secure) for more details.
 	PhoneNumber *string `form:"phone_number"`
+	// The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
+	//  This changes the language of the [3D Secure flow](https://stripe.com/docs/issuing/3d-secure) and one-time password messages sent to the cardholder.
+	PreferredLocales []*string `form:"preferred_locales"`
 	// Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
 	SpendingControls *IssuingCardholderSpendingControlsParams `form:"spending_controls"`
 	// Specifies whether to permit authorizations on this cardholder's cards.
 	Status *string `form:"status"`
-	// One of `individual` or `company`.
+	// One of `individual` or `company`. See [Choose a cardholder type](https://stripe.com/docs/issuing/other/choose-cardholder) for more details.
 	Type *string `form:"type"`
 }
 type IssuingCardholderBilling struct {
@@ -171,13 +207,15 @@ type IssuingCardholderCompany struct {
 
 // Information about cardholder acceptance of [Authorized User Terms](https://stripe.com/docs/issuing/cards).
 type IssuingCardholderIndividualCardIssuingUserTermsAcceptance struct {
-	// The Unix timestamp marking when the cardholder accepted the Authorized User Terms.
+	// The Unix timestamp marking when the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
 	Date int64 `json:"date"`
-	// The IP address from which the cardholder accepted the Authorized User Terms.
+	// The IP address from which the cardholder accepted the Authorized User Terms. Required for Celtic Spend Card users.
 	IP string `json:"ip"`
 	// The user agent of the browser from which the cardholder accepted the Authorized User Terms.
 	UserAgent string `json:"user_agent"`
 }
+
+// Information related to the card_issuing program for this cardholder.
 type IssuingCardholderIndividualCardIssuing struct {
 	// Information about cardholder acceptance of [Authorized User Terms](https://stripe.com/docs/issuing/cards).
 	UserTermsAcceptance *IssuingCardholderIndividualCardIssuingUserTermsAcceptance `json:"user_terms_acceptance"`
@@ -209,12 +247,13 @@ type IssuingCardholderIndividualVerification struct {
 
 // Additional information about an `individual` cardholder.
 type IssuingCardholderIndividual struct {
+	// Information related to the card_issuing program for this cardholder.
 	CardIssuing *IssuingCardholderIndividualCardIssuing `json:"card_issuing"`
 	// The date of birth of this cardholder.
 	DOB *IssuingCardholderIndividualDOB `json:"dob"`
-	// The first name of this cardholder.
+	// The first name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
 	FirstName string `json:"first_name"`
-	// The last name of this cardholder.
+	// The last name of this cardholder. Required before activating Cards. This field cannot contain any numbers, special characters (except periods, commas, hyphens, spaces and apostrophes) or non-latin letters.
 	LastName string `json:"last_name"`
 	// Government-issued ID document for this cardholder.
 	Verification *IssuingCardholderIndividualVerification `json:"verification"`
@@ -250,7 +289,7 @@ type IssuingCardholderSpendingControls struct {
 
 // An Issuing `Cardholder` object represents an individual or business entity who is [issued](https://stripe.com/docs/issuing) cards.
 //
-// Related guide: [How to create a Cardholder](https://stripe.com/docs/issuing/cards#create-cardholder)
+// Related guide: [How to create a cardholder](https://stripe.com/docs/issuing/cards#create-cardholder)
 type IssuingCardholder struct {
 	APIResource
 	Billing *IssuingCardholderBilling `json:"billing"`
@@ -273,13 +312,16 @@ type IssuingCardholder struct {
 	// String representing the object's type. Objects of the same type share the same value.
 	Object string `json:"object"`
 	// The cardholder's phone number. This is required for all cardholders who will be creating EU cards. See the [3D Secure documentation](https://stripe.com/docs/issuing/3d-secure#when-is-3d-secure-applied) for more details.
-	PhoneNumber  string                         `json:"phone_number"`
-	Requirements *IssuingCardholderRequirements `json:"requirements"`
+	PhoneNumber string `json:"phone_number"`
+	// The cardholder's preferred locales (languages), ordered by preference. Locales can be `de`, `en`, `es`, `fr`, or `it`.
+	//  This changes the language of the [3D Secure flow](https://stripe.com/docs/issuing/3d-secure) and one-time password messages sent to the cardholder.
+	PreferredLocales []IssuingCardholderPreferredLocale `json:"preferred_locales"`
+	Requirements     *IssuingCardholderRequirements     `json:"requirements"`
 	// Rules that control spending across this cardholder's cards. Refer to our [documentation](https://stripe.com/docs/issuing/controls/spending-controls) for more details.
 	SpendingControls *IssuingCardholderSpendingControls `json:"spending_controls"`
 	// Specifies whether to permit authorizations on this cardholder's cards.
 	Status IssuingCardholderStatus `json:"status"`
-	// One of `individual` or `company`.
+	// One of `individual` or `company`. See [Choose a cardholder type](https://stripe.com/docs/issuing/other/choose-cardholder) for more details.
 	Type IssuingCardholderType `json:"type"`
 }
 

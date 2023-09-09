@@ -1,4 +1,4 @@
-all: test bench vet lint check-api-clients check-gofmt
+all: test bench vet lint check-api-clients check-gofmt ci-test
 
 bench:
 	go test -race -bench . -run "Benchmark" ./form
@@ -18,6 +18,7 @@ lint:
 test:
 	go run scripts/test_with_stripe_mock/main.go -race ./...
 
+ci-test: test bench check-api-clients
 vet:
 	go vet ./...
 
@@ -40,5 +41,6 @@ update-version:
 
 codegen-format:
 	go fmt ./...
+	go install golang.org/x/tools/cmd/goimports@latest && goimports -w example/generated_examples_test.go
 
 .PHONY: codegen-format update-version

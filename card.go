@@ -43,7 +43,7 @@ const (
 	CardAvailablePayoutMethodStandard CardAvailablePayoutMethod = "standard"
 )
 
-// Card brand. Can be `American Express`, `Diners Club`, `Discover`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
+// Card brand. Can be `American Express`, `Diners Club`, `Discover`, `Eftpos Australia`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
 type CardBrand string
 
 // List of values that CardBrand can take
@@ -269,7 +269,7 @@ func (p *CardListParams) AppendTo(body *form.Values, keyParts []string) {
 // later. You can also store multiple debit cards on a recipient in order to
 // transfer to those cards later.
 //
-// Related guide: [Card Payments with Sources](https://stripe.com/docs/sources/cards).
+// Related guide: [Card payments with Sources](https://stripe.com/docs/sources/cards)
 type Card struct {
 	APIResource
 	// The account this card belongs to. This attribute will not be in the card object if the card belongs to a customer or recipient instead.
@@ -292,7 +292,7 @@ type Card struct {
 	AddressZipCheck CardAddressZipCheck `json:"address_zip_check"`
 	// A set of available payout methods for this card. Only values from this set should be passed as the `method` when creating a payout.
 	AvailablePayoutMethods []CardAvailablePayoutMethod `json:"available_payout_methods"`
-	// Card brand. Can be `American Express`, `Diners Club`, `Discover`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
+	// Card brand. Can be `American Express`, `Diners Club`, `Discover`, `Eftpos Australia`, `JCB`, `MasterCard`, `UnionPay`, `Visa`, or `Unknown`.
 	Brand CardBrand `json:"brand"`
 	// Two-letter ISO code representing the country of the card. You could use this attribute to get a sense of the international breakdown of cards you've collected.
 	Country string `json:"country"`

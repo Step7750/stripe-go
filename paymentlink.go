@@ -44,6 +44,24 @@ const (
 	PaymentLinkConsentCollectionTermsOfServiceRequired PaymentLinkConsentCollectionTermsOfService = "required"
 )
 
+// The type of the label.
+type PaymentLinkCustomFieldLabelType string
+
+// List of values that PaymentLinkCustomFieldLabelType can take
+const (
+	PaymentLinkCustomFieldLabelTypeCustom PaymentLinkCustomFieldLabelType = "custom"
+)
+
+// The type of the field.
+type PaymentLinkCustomFieldType string
+
+// List of values that PaymentLinkCustomFieldType can take
+const (
+	PaymentLinkCustomFieldTypeDropdown PaymentLinkCustomFieldType = "dropdown"
+	PaymentLinkCustomFieldTypeNumeric  PaymentLinkCustomFieldType = "numeric"
+	PaymentLinkCustomFieldTypeText     PaymentLinkCustomFieldType = "text"
+)
+
 // Configuration for Customer creation during checkout.
 type PaymentLinkCustomerCreation string
 
@@ -58,8 +76,9 @@ type PaymentLinkPaymentIntentDataCaptureMethod string
 
 // List of values that PaymentLinkPaymentIntentDataCaptureMethod can take
 const (
-	PaymentLinkPaymentIntentDataCaptureMethodAutomatic PaymentLinkPaymentIntentDataCaptureMethod = "automatic"
-	PaymentLinkPaymentIntentDataCaptureMethodManual    PaymentLinkPaymentIntentDataCaptureMethod = "manual"
+	PaymentLinkPaymentIntentDataCaptureMethodAutomatic      PaymentLinkPaymentIntentDataCaptureMethod = "automatic"
+	PaymentLinkPaymentIntentDataCaptureMethodAutomaticAsync PaymentLinkPaymentIntentDataCaptureMethod = "automatic_async"
+	PaymentLinkPaymentIntentDataCaptureMethodManual         PaymentLinkPaymentIntentDataCaptureMethod = "manual"
 )
 
 // Indicates that you intend to make future payments with the payment method collected during checkout.
@@ -94,6 +113,7 @@ const (
 	PaymentLinkPaymentMethodTypeBLIK             PaymentLinkPaymentMethodType = "blik"
 	PaymentLinkPaymentMethodTypeBoleto           PaymentLinkPaymentMethodType = "boleto"
 	PaymentLinkPaymentMethodTypeCard             PaymentLinkPaymentMethodType = "card"
+	PaymentLinkPaymentMethodTypeCashApp          PaymentLinkPaymentMethodType = "cashapp"
 	PaymentLinkPaymentMethodTypeEPS              PaymentLinkPaymentMethodType = "eps"
 	PaymentLinkPaymentMethodTypeFPX              PaymentLinkPaymentMethodType = "fpx"
 	PaymentLinkPaymentMethodTypeGiropay          PaymentLinkPaymentMethodType = "giropay"
@@ -101,9 +121,11 @@ const (
 	PaymentLinkPaymentMethodTypeIDEAL            PaymentLinkPaymentMethodType = "ideal"
 	PaymentLinkPaymentMethodTypeKlarna           PaymentLinkPaymentMethodType = "klarna"
 	PaymentLinkPaymentMethodTypeKonbini          PaymentLinkPaymentMethodType = "konbini"
+	PaymentLinkPaymentMethodTypeLink             PaymentLinkPaymentMethodType = "link"
 	PaymentLinkPaymentMethodTypeOXXO             PaymentLinkPaymentMethodType = "oxxo"
 	PaymentLinkPaymentMethodTypeP24              PaymentLinkPaymentMethodType = "p24"
 	PaymentLinkPaymentMethodTypePayNow           PaymentLinkPaymentMethodType = "paynow"
+	PaymentLinkPaymentMethodTypePaypal           PaymentLinkPaymentMethodType = "paypal"
 	PaymentLinkPaymentMethodTypePix              PaymentLinkPaymentMethodType = "pix"
 	PaymentLinkPaymentMethodTypePromptPay        PaymentLinkPaymentMethodType = "promptpay"
 	PaymentLinkPaymentMethodTypeSEPADebit        PaymentLinkPaymentMethodType = "sepa_debit"
@@ -169,15 +191,71 @@ type PaymentLinkConsentCollectionParams struct {
 	TermsOfService *string `form:"terms_of_service"`
 }
 
+// The options available for the customer to select. Up to 200 options allowed.
+type PaymentLinkCustomFieldDropdownOptionParams struct {
+	// The label for the option, displayed to the customer. Up to 100 characters.
+	Label *string `form:"label"`
+	// The value for this option, not displayed to the customer, used by your integration to reconcile the option selected by the customer. Must be unique to this option, alphanumeric, and up to 100 characters.
+	Value *string `form:"value"`
+}
+
+// Configuration for `type=dropdown` fields.
+type PaymentLinkCustomFieldDropdownParams struct {
+	// The options available for the customer to select. Up to 200 options allowed.
+	Options []*PaymentLinkCustomFieldDropdownOptionParams `form:"options"`
+}
+
+// The label for the field, displayed to the customer.
+type PaymentLinkCustomFieldLabelParams struct {
+	// Custom text for the label, displayed to the customer. Up to 50 characters.
+	Custom *string `form:"custom"`
+	// The type of the label.
+	Type *string `form:"type"`
+}
+
+// Configuration for `type=numeric` fields.
+type PaymentLinkCustomFieldNumericParams struct {
+	// The maximum character length constraint for the customer's input.
+	MaximumLength *int64 `form:"maximum_length"`
+	// The minimum character length requirement for the customer's input.
+	MinimumLength *int64 `form:"minimum_length"`
+}
+
+// Configuration for `type=text` fields.
+type PaymentLinkCustomFieldTextParams struct {
+	// The maximum character length constraint for the customer's input.
+	MaximumLength *int64 `form:"maximum_length"`
+	// The minimum character length requirement for the customer's input.
+	MinimumLength *int64 `form:"minimum_length"`
+}
+
+// Collect additional information from your customer using custom fields. Up to 2 fields are supported.
+type PaymentLinkCustomFieldParams struct {
+	// Configuration for `type=dropdown` fields.
+	Dropdown *PaymentLinkCustomFieldDropdownParams `form:"dropdown"`
+	// String of your choice that your integration can use to reconcile this field. Must be unique to this field, alphanumeric, and up to 200 characters.
+	Key *string `form:"key"`
+	// The label for the field, displayed to the customer.
+	Label *PaymentLinkCustomFieldLabelParams `form:"label"`
+	// Configuration for `type=numeric` fields.
+	Numeric *PaymentLinkCustomFieldNumericParams `form:"numeric"`
+	// Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
+	Optional *bool `form:"optional"`
+	// Configuration for `type=text` fields.
+	Text *PaymentLinkCustomFieldTextParams `form:"text"`
+	// The type of the field.
+	Type *string `form:"type"`
+}
+
 // Custom text that should be displayed alongside shipping address collection.
 type PaymentLinkCustomTextShippingAddressParams struct {
-	// Text may be up to 500 characters in length.
+	// Text may be up to 1000 characters in length.
 	Message *string `form:"message"`
 }
 
 // Custom text that should be displayed alongside the payment confirmation button.
 type PaymentLinkCustomTextSubmitParams struct {
-	// Text may be up to 500 characters in length.
+	// Text may be up to 1000 characters in length.
 	Message *string `form:"message"`
 }
 
@@ -187,6 +265,44 @@ type PaymentLinkCustomTextParams struct {
 	ShippingAddress *PaymentLinkCustomTextShippingAddressParams `form:"shipping_address"`
 	// Custom text that should be displayed alongside the payment confirmation button.
 	Submit *PaymentLinkCustomTextSubmitParams `form:"submit"`
+}
+
+// Default custom fields to be displayed on invoices for this customer.
+type PaymentLinkInvoiceCreationInvoiceDataCustomFieldParams struct {
+	// The name of the custom field. This may be up to 30 characters.
+	Name *string `form:"name"`
+	// The value of the custom field. This may be up to 30 characters.
+	Value *string `form:"value"`
+}
+
+// Default options for invoice PDF rendering for this customer.
+type PaymentLinkInvoiceCreationInvoiceDataRenderingOptionsParams struct {
+	// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs. One of `exclude_tax` or `include_inclusive_tax`. `include_inclusive_tax` will include inclusive tax (and exclude exclusive tax) in invoice PDF amounts. `exclude_tax` will exclude all tax (inclusive and exclusive alike) from invoice PDF amounts.
+	AmountTaxDisplay *string `form:"amount_tax_display"`
+}
+
+// Invoice PDF configuration.
+type PaymentLinkInvoiceCreationInvoiceDataParams struct {
+	// The account tax IDs associated with the invoice.
+	AccountTaxIDs []*string `form:"account_tax_ids"`
+	// Default custom fields to be displayed on invoices for this customer.
+	CustomFields []*PaymentLinkInvoiceCreationInvoiceDataCustomFieldParams `form:"custom_fields"`
+	// An arbitrary string attached to the object. Often useful for displaying to users.
+	Description *string `form:"description"`
+	// Default footer to be displayed on invoices for this customer.
+	Footer *string `form:"footer"`
+	// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+	Metadata map[string]string `form:"metadata"`
+	// Default options for invoice PDF rendering for this customer.
+	RenderingOptions *PaymentLinkInvoiceCreationInvoiceDataRenderingOptionsParams `form:"rendering_options"`
+}
+
+// Generate a post-purchase Invoice for one-time payments.
+type PaymentLinkInvoiceCreationParams struct {
+	// Whether the feature is enabled
+	Enabled *bool `form:"enabled"`
+	// Invoice PDF configuration.
+	InvoiceData *PaymentLinkInvoiceCreationInvoiceDataParams `form:"invoice_data"`
 }
 
 // When set, provides configuration for this item's quantity to be adjusted by the customer during checkout.
@@ -286,7 +402,7 @@ type PaymentLinkParams struct {
 	AllowPromotionCodes *bool `form:"allow_promotion_codes"`
 	// The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account. Can only be applied when there are no line items with recurring prices.
 	ApplicationFeeAmount *int64 `form:"application_fee_amount"`
-	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account. There must be at least 1 line item with a recurring price to use this field.
+	// A non-negative decimal between 0 and 100, with at most two decimal places. This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account. There must be at least 1 line item with a recurring price to use this field.
 	ApplicationFeePercent *float64 `form:"application_fee_percent"`
 	// Configuration for automatic tax collection.
 	AutomaticTax *PaymentLinkAutomaticTaxParams `form:"automatic_tax"`
@@ -298,8 +414,12 @@ type PaymentLinkParams struct {
 	Currency *string `form:"currency"`
 	// Configures whether [checkout sessions](https://stripe.com/docs/api/checkout/sessions) created by this payment link create a [Customer](https://stripe.com/docs/api/customers).
 	CustomerCreation *string `form:"customer_creation"`
+	// Collect additional information from your customer using custom fields. Up to 2 fields are supported.
+	CustomFields []*PaymentLinkCustomFieldParams `form:"custom_fields"`
 	// Display additional text for your customers using custom text.
 	CustomText *PaymentLinkCustomTextParams `form:"custom_text"`
+	// Generate a post-purchase Invoice for one-time payments.
+	InvoiceCreation *PaymentLinkInvoiceCreationParams `form:"invoice_creation"`
 	// The line items representing what is being sold. Each line item represents an item being sold. Up to 20 line items are supported.
 	LineItems []*PaymentLinkLineItemParams `form:"line_items"`
 	// The account on behalf of which to charge.
@@ -364,15 +484,68 @@ type PaymentLinkConsentCollection struct {
 	TermsOfService PaymentLinkConsentCollectionTermsOfService `json:"terms_of_service"`
 }
 
+// The options available for the customer to select. Up to 200 options allowed.
+type PaymentLinkCustomFieldDropdownOption struct {
+	// The label for the option, displayed to the customer. Up to 100 characters.
+	Label string `json:"label"`
+	// The value for this option, not displayed to the customer, used by your integration to reconcile the option selected by the customer. Must be unique to this option, alphanumeric, and up to 100 characters.
+	Value string `json:"value"`
+}
+
+// Configuration for `type=dropdown` fields.
+type PaymentLinkCustomFieldDropdown struct {
+	// The options available for the customer to select. Up to 200 options allowed.
+	Options []*PaymentLinkCustomFieldDropdownOption `json:"options"`
+}
+type PaymentLinkCustomFieldLabel struct {
+	// Custom text for the label, displayed to the customer. Up to 50 characters.
+	Custom string `json:"custom"`
+	// The type of the label.
+	Type PaymentLinkCustomFieldLabelType `json:"type"`
+}
+
+// Configuration for `type=numeric` fields.
+type PaymentLinkCustomFieldNumeric struct {
+	// The maximum character length constraint for the customer's input.
+	MaximumLength int64 `json:"maximum_length"`
+	// The minimum character length requirement for the customer's input.
+	MinimumLength int64 `json:"minimum_length"`
+}
+
+// Configuration for `type=text` fields.
+type PaymentLinkCustomFieldText struct {
+	// The maximum character length constraint for the customer's input.
+	MaximumLength int64 `json:"maximum_length"`
+	// The minimum character length requirement for the customer's input.
+	MinimumLength int64 `json:"minimum_length"`
+}
+
+// Collect additional information from your customer using custom fields. Up to 2 fields are supported.
+type PaymentLinkCustomField struct {
+	// Configuration for `type=dropdown` fields.
+	Dropdown *PaymentLinkCustomFieldDropdown `json:"dropdown"`
+	// String of your choice that your integration can use to reconcile this field. Must be unique to this field, alphanumeric, and up to 200 characters.
+	Key   string                       `json:"key"`
+	Label *PaymentLinkCustomFieldLabel `json:"label"`
+	// Configuration for `type=numeric` fields.
+	Numeric *PaymentLinkCustomFieldNumeric `json:"numeric"`
+	// Whether the customer is required to complete the field before completing the Checkout Session. Defaults to `false`.
+	Optional bool `json:"optional"`
+	// Configuration for `type=text` fields.
+	Text *PaymentLinkCustomFieldText `json:"text"`
+	// The type of the field.
+	Type PaymentLinkCustomFieldType `json:"type"`
+}
+
 // Custom text that should be displayed alongside shipping address collection.
 type PaymentLinkCustomTextShippingAddress struct {
-	// Text may be up to 500 characters in length.
+	// Text may be up to 1000 characters in length.
 	Message string `json:"message"`
 }
 
 // Custom text that should be displayed alongside the payment confirmation button.
 type PaymentLinkCustomTextSubmit struct {
-	// Text may be up to 500 characters in length.
+	// Text may be up to 1000 characters in length.
 	Message string `json:"message"`
 }
 type PaymentLinkCustomText struct {
@@ -380,6 +553,44 @@ type PaymentLinkCustomText struct {
 	ShippingAddress *PaymentLinkCustomTextShippingAddress `json:"shipping_address"`
 	// Custom text that should be displayed alongside the payment confirmation button.
 	Submit *PaymentLinkCustomTextSubmit `json:"submit"`
+}
+
+// A list of up to 4 custom fields to be displayed on the invoice.
+type PaymentLinkInvoiceCreationInvoiceDataCustomField struct {
+	// The name of the custom field.
+	Name string `json:"name"`
+	// The value of the custom field.
+	Value string `json:"value"`
+}
+
+// Options for invoice PDF rendering.
+type PaymentLinkInvoiceCreationInvoiceDataRenderingOptions struct {
+	// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
+	AmountTaxDisplay string `json:"amount_tax_display"`
+}
+
+// Configuration for the invoice. Default invoice values will be used if unspecified.
+type PaymentLinkInvoiceCreationInvoiceData struct {
+	// The account tax IDs associated with the invoice.
+	AccountTaxIDs []*TaxID `json:"account_tax_ids"`
+	// A list of up to 4 custom fields to be displayed on the invoice.
+	CustomFields []*PaymentLinkInvoiceCreationInvoiceDataCustomField `json:"custom_fields"`
+	// An arbitrary string attached to the object. Often useful for displaying to users.
+	Description string `json:"description"`
+	// Footer to be displayed on the invoice.
+	Footer string `json:"footer"`
+	// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
+	Metadata map[string]string `json:"metadata"`
+	// Options for invoice PDF rendering.
+	RenderingOptions *PaymentLinkInvoiceCreationInvoiceDataRenderingOptions `json:"rendering_options"`
+}
+
+// Configuration for creating invoice for payment mode payment links.
+type PaymentLinkInvoiceCreation struct {
+	// Enable creating an invoice on successful payment.
+	Enabled bool `json:"enabled"`
+	// Configuration for the invoice. Default invoice values will be used if unspecified.
+	InvoiceData *PaymentLinkInvoiceCreationInvoiceData `json:"invoice_data"`
 }
 
 // Indicates the parameters to be passed to PaymentIntent creation during checkout.
@@ -422,7 +633,7 @@ type PaymentLinkTaxIDCollection struct {
 
 // The account (if any) the payments will be attributed to for tax reporting, and where funds from each payment will be transferred to.
 type PaymentLinkTransferData struct {
-	// The amount in %s that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
+	// The amount in cents (or local equivalent) that will be transferred to the destination account. By default, the entire amount is transferred to the destination.
 	Amount int64 `json:"amount"`
 	// The connected account receiving the transfer.
 	Destination *Account `json:"destination"`
@@ -432,7 +643,7 @@ type PaymentLinkTransferData struct {
 //
 // When a customer opens a payment link it will open a new [checkout session](https://stripe.com/docs/api/checkout/sessions) to render the payment page. You can use [checkout session events](https://stripe.com/docs/api/events/types#event_types-checkout.session.completed) to track payments through payment links.
 //
-// Related guide: [Payment Links API](https://stripe.com/docs/payments/payment-links/api)
+// Related guide: [Payment Links API](https://stripe.com/docs/payment-links)
 type PaymentLink struct {
 	APIResource
 	// Whether the payment link's `url` is active. If `false`, customers visiting the URL will be shown a page saying that the link has been deactivated.
@@ -442,7 +653,7 @@ type PaymentLink struct {
 	AllowPromotionCodes bool `json:"allow_promotion_codes"`
 	// The amount of the application fee (if any) that will be requested to be applied to the payment and transferred to the application owner's Stripe account.
 	ApplicationFeeAmount int64 `json:"application_fee_amount"`
-	// This represents the percentage of the subscription invoice subtotal that will be transferred to the application owner's Stripe account.
+	// This represents the percentage of the subscription invoice total that will be transferred to the application owner's Stripe account.
 	ApplicationFeePercent float64                  `json:"application_fee_percent"`
 	AutomaticTax          *PaymentLinkAutomaticTax `json:"automatic_tax"`
 	// Configuration for collecting the customer's billing address.
@@ -453,9 +664,13 @@ type PaymentLink struct {
 	Currency Currency `json:"currency"`
 	// Configuration for Customer creation during checkout.
 	CustomerCreation PaymentLinkCustomerCreation `json:"customer_creation"`
-	CustomText       *PaymentLinkCustomText      `json:"custom_text"`
+	// Collect additional information from your customer using custom fields. Up to 2 fields are supported.
+	CustomFields []*PaymentLinkCustomField `json:"custom_fields"`
+	CustomText   *PaymentLinkCustomText    `json:"custom_text"`
 	// Unique identifier for the object.
 	ID string `json:"id"`
+	// Configuration for creating invoice for payment mode payment links.
+	InvoiceCreation *PaymentLinkInvoiceCreation `json:"invoice_creation"`
 	// The line items representing what is being sold.
 	LineItems *LineItemList `json:"line_items"`
 	// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.

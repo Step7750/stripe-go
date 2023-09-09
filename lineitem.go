@@ -6,6 +6,31 @@
 
 package stripe
 
+// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+type LineItemTaxTaxabilityReason string
+
+// List of values that LineItemTaxTaxabilityReason can take
+const (
+	LineItemTaxTaxabilityReasonCustomerExempt          LineItemTaxTaxabilityReason = "customer_exempt"
+	LineItemTaxTaxabilityReasonExcludedTerritory       LineItemTaxTaxabilityReason = "excluded_territory"
+	LineItemTaxTaxabilityReasonJurisdictionUnsupported LineItemTaxTaxabilityReason = "jurisdiction_unsupported"
+	LineItemTaxTaxabilityReasonNotCollecting           LineItemTaxTaxabilityReason = "not_collecting"
+	LineItemTaxTaxabilityReasonNotSubjectToTax         LineItemTaxTaxabilityReason = "not_subject_to_tax"
+	LineItemTaxTaxabilityReasonNotSupported            LineItemTaxTaxabilityReason = "not_supported"
+	LineItemTaxTaxabilityReasonPortionProductExempt    LineItemTaxTaxabilityReason = "portion_product_exempt"
+	LineItemTaxTaxabilityReasonPortionReducedRated     LineItemTaxTaxabilityReason = "portion_reduced_rated"
+	LineItemTaxTaxabilityReasonPortionStandardRated    LineItemTaxTaxabilityReason = "portion_standard_rated"
+	LineItemTaxTaxabilityReasonProductExempt           LineItemTaxTaxabilityReason = "product_exempt"
+	LineItemTaxTaxabilityReasonProductExemptHoliday    LineItemTaxTaxabilityReason = "product_exempt_holiday"
+	LineItemTaxTaxabilityReasonProportionallyRated     LineItemTaxTaxabilityReason = "proportionally_rated"
+	LineItemTaxTaxabilityReasonReducedRated            LineItemTaxTaxabilityReason = "reduced_rated"
+	LineItemTaxTaxabilityReasonReverseCharge           LineItemTaxTaxabilityReason = "reverse_charge"
+	LineItemTaxTaxabilityReasonStandardRated           LineItemTaxTaxabilityReason = "standard_rated"
+	LineItemTaxTaxabilityReasonTaxableBasisReduced     LineItemTaxTaxabilityReason = "taxable_basis_reduced"
+	LineItemTaxTaxabilityReasonVATExempt               LineItemTaxTaxabilityReason = "vat_exempt"
+	LineItemTaxTaxabilityReasonZeroRated               LineItemTaxTaxabilityReason = "zero_rated"
+)
+
 // The discounts applied to the line item.
 type LineItemDiscount struct {
 	// The amount discounted.
@@ -13,7 +38,7 @@ type LineItemDiscount struct {
 	// A discount represents the actual application of a [coupon](https://stripe.com/docs/api#coupons) or [promotion code](https://stripe.com/docs/api#promotion_codes).
 	// It contains information about when the discount began, when it will end, and what it is applied to.
 	//
-	// Related guide: [Applying Discounts to Subscriptions](https://stripe.com/docs/billing/subscriptions/discounts).
+	// Related guide: [Applying discounts to subscriptions](https://stripe.com/docs/billing/subscriptions/discounts)
 	Discount *Discount `json:"discount"`
 }
 
@@ -23,8 +48,12 @@ type LineItemTax struct {
 	Amount int64 `json:"amount"`
 	// Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
 	//
-	// Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+	// Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
 	Rate *TaxRate `json:"rate"`
+	// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+	TaxabilityReason LineItemTaxTaxabilityReason `json:"taxability_reason"`
+	// The amount on which tax is calculated, in cents (or local equivalent).
+	TaxableAmount int64 `json:"taxable_amount"`
 }
 
 // A line item.

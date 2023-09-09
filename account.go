@@ -42,6 +42,7 @@ const (
 	AccountCompanyStructureGovernmentInstrumentality          AccountCompanyStructure = "government_instrumentality"
 	AccountCompanyStructureGovernmentalUnit                   AccountCompanyStructure = "governmental_unit"
 	AccountCompanyStructureIncorporatedNonProfit              AccountCompanyStructure = "incorporated_non_profit"
+	AccountCompanyStructureIncorporatedPartnership            AccountCompanyStructure = "incorporated_partnership"
 	AccountCompanyStructureLimitedLiabilityPartnership        AccountCompanyStructure = "limited_liability_partnership"
 	AccountCompanyStructureLLC                                AccountCompanyStructure = "llc"
 	AccountCompanyStructureMultiMemberLLC                     AccountCompanyStructure = "multi_member_llc"
@@ -57,6 +58,7 @@ const (
 	AccountCompanyStructureTaxExemptGovernmentInstrumentality AccountCompanyStructure = "tax_exempt_government_instrumentality"
 	AccountCompanyStructureUnincorporatedAssociation          AccountCompanyStructure = "unincorporated_association"
 	AccountCompanyStructureUnincorporatedNonProfit            AccountCompanyStructure = "unincorporated_non_profit"
+	AccountCompanyStructureUnincorporatedPartnership          AccountCompanyStructure = "unincorporated_partnership"
 )
 
 // One of `document_corrupt`, `document_expired`, `document_failed_copy`, `document_failed_greyscale`, `document_failed_other`, `document_failed_test_mode`, `document_fraudulent`, `document_incomplete`, `document_invalid`, `document_manipulated`, `document_not_readable`, `document_not_uploaded`, `document_type_not_supported`, or `document_too_large`. A machine-readable code specifying the verification state for this document.
@@ -64,16 +66,20 @@ type AccountCompanyVerificationDocumentDetailsCode string
 
 // List of values that AccountCompanyVerificationDocumentDetailsCode can take
 const (
-	AccountCompanyVerificationDocumentDetailsCodeDocumentCorrupt        AccountCompanyVerificationDocumentDetailsCode = "document_corrupt"
-	AccountCompanyVerificationDocumentDetailsCodeDocumentFailedCopy     AccountCompanyVerificationDocumentDetailsCode = "document_failed_copy"
-	AccountCompanyVerificationDocumentDetailsCodeDocumentFailedOther    AccountCompanyVerificationDocumentDetailsCode = "document_failed_other"
-	AccountCompanyVerificationDocumentDetailsCodeDocumentFailedTestMode AccountCompanyVerificationDocumentDetailsCode = "document_failed_test_mode"
-	AccountCompanyVerificationDocumentDetailsCodeDocumentFraudulent     AccountCompanyVerificationDocumentDetailsCode = "document_fraudulent"
-	AccountCompanyVerificationDocumentDetailsCodeDocumentInvalid        AccountCompanyVerificationDocumentDetailsCode = "document_invalid"
-	AccountCompanyVerificationDocumentDetailsCodeDocumentManipulated    AccountCompanyVerificationDocumentDetailsCode = "document_manipulated"
-	AccountCompanyVerificationDocumentDetailsCodeDocumentNotReadable    AccountCompanyVerificationDocumentDetailsCode = "document_not_readable"
-	AccountCompanyVerificationDocumentDetailsCodeDocumentNotUploaded    AccountCompanyVerificationDocumentDetailsCode = "document_not_uploaded"
-	AccountCompanyVerificationDocumentDetailsCodeDocumentTooLarge       AccountCompanyVerificationDocumentDetailsCode = "document_too_large"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentCorrupt          AccountCompanyVerificationDocumentDetailsCode = "document_corrupt"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentExpired          AccountCompanyVerificationDocumentDetailsCode = "document_expired"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentFailedCopy       AccountCompanyVerificationDocumentDetailsCode = "document_failed_copy"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentFailedOther      AccountCompanyVerificationDocumentDetailsCode = "document_failed_other"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentFailedTestMode   AccountCompanyVerificationDocumentDetailsCode = "document_failed_test_mode"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentFailedGreyscale  AccountCompanyVerificationDocumentDetailsCode = "document_failed_greyscale"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentFraudulent       AccountCompanyVerificationDocumentDetailsCode = "document_fraudulent"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentInvalid          AccountCompanyVerificationDocumentDetailsCode = "document_invalid"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentIncomplete       AccountCompanyVerificationDocumentDetailsCode = "document_incomplete"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentManipulated      AccountCompanyVerificationDocumentDetailsCode = "document_manipulated"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentNotReadable      AccountCompanyVerificationDocumentDetailsCode = "document_not_readable"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentNotUploaded      AccountCompanyVerificationDocumentDetailsCode = "document_not_uploaded"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentTooLarge         AccountCompanyVerificationDocumentDetailsCode = "document_too_large"
+	AccountCompanyVerificationDocumentDetailsCodeDocumentTypeNotSupported AccountCompanyVerificationDocumentDetailsCode = "document_type_not_supported"
 )
 
 // The controller type. Can be `application`, if a Connect application controls the account, or `account`, if the account controls itself.
@@ -174,10 +180,20 @@ type AccountParams struct {
 	Type *string `form:"type"`
 }
 
+// An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
+type AccountBusinessProfileMonthlyEstimatedRevenueParams struct {
+	// A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+	Amount *int64 `form:"amount"`
+	// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+	Currency *string `form:"currency"`
+}
+
 // Business information about the account.
 type AccountBusinessProfileParams struct {
 	// [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
 	MCC *string `form:"mcc"`
+	// An estimate of the monthly revenue of the business. Only accepted for accounts in Brazil and India.
+	MonthlyEstimatedRevenue *AccountBusinessProfileMonthlyEstimatedRevenueParams `form:"monthly_estimated_revenue"`
 	// The customer-facing business name.
 	Name *string `form:"name"`
 	// Internal-only description of the product sold by, or service provided by, the business. Used by Stripe for risk and underwriting purposes.
@@ -262,6 +278,12 @@ type AccountCapabilitiesCardPaymentsParams struct {
 
 // The cartes_bancaires_payments capability.
 type AccountCapabilitiesCartesBancairesPaymentsParams struct {
+	// Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+	Requested *bool `form:"requested"`
+}
+
+// The cashapp_payments capability.
+type AccountCapabilitiesCashAppPaymentsParams struct {
 	// Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
 	Requested *bool `form:"requested"`
 }
@@ -398,6 +420,12 @@ type AccountCapabilitiesUSBankAccountACHPaymentsParams struct {
 	Requested *bool `form:"requested"`
 }
 
+// The zip_payments capability.
+type AccountCapabilitiesZipPaymentsParams struct {
+	// Passing true requests the capability for the account, if it is not already requested. A requested capability may not immediately become active. Any requirements to activate the capability are returned in the `requirements` arrays.
+	Requested *bool `form:"requested"`
+}
+
 // Each key of the dictionary represents a capability, and each capability maps to its settings (e.g. whether it has been requested or not). Each capability will be inactive until you have provided its specific requirements and Stripe has verified them. An account may have some of its requested capabilities be active and some be inactive.
 type AccountCapabilitiesParams struct {
 	// The acss_debit_payments capability.
@@ -424,6 +452,8 @@ type AccountCapabilitiesParams struct {
 	CardPayments *AccountCapabilitiesCardPaymentsParams `form:"card_payments"`
 	// The cartes_bancaires_payments capability.
 	CartesBancairesPayments *AccountCapabilitiesCartesBancairesPaymentsParams `form:"cartes_bancaires_payments"`
+	// The cashapp_payments capability.
+	CashAppPayments *AccountCapabilitiesCashAppPaymentsParams `form:"cashapp_payments"`
 	// The eps_payments capability.
 	EPSPayments *AccountCapabilitiesEPSPaymentsParams `form:"eps_payments"`
 	// The fpx_payments capability.
@@ -468,6 +498,8 @@ type AccountCapabilitiesParams struct {
 	Treasury *AccountCapabilitiesTreasuryParams `form:"treasury"`
 	// The us_bank_account_ach_payments capability.
 	USBankAccountACHPayments *AccountCapabilitiesUSBankAccountACHPaymentsParams `form:"us_bank_account_ach_payments"`
+	// The zip_payments capability.
+	ZipPayments *AccountCapabilitiesZipPaymentsParams `form:"zip_payments"`
 }
 
 // The Kana variation of the company's primary address (Japan only).
@@ -542,6 +574,10 @@ type AccountCompanyParams struct {
 	DirectorsProvided *bool `form:"directors_provided"`
 	// Whether the company's executives have been provided. Set this Boolean to `true` after creating all the company's executives with [the Persons API](https://stripe.com/docs/api/persons) for accounts with a `relationship.executive` requirement.
 	ExecutivesProvided *bool `form:"executives_provided"`
+	// The export license ID number of the company, also referred as Import Export Code (India only).
+	ExportLicenseID *string `form:"export_license_id"`
+	// The purpose code to use for export transactions (India only).
+	ExportPurposeCode *string `form:"export_purpose_code"`
 	// The company's legal name.
 	Name *string `form:"name"`
 	// The Kana variation of the company's legal name (Japan only).
@@ -690,7 +726,7 @@ type AccountSettingsPaymentsParams struct {
 
 // Details on when funds from charges are available, and when they are paid out to an external account. For details, see our [Setting Bank and Debit Card Payouts](https://stripe.com/docs/connect/bank-transfers#payout-information) documentation.
 type AccountSettingsPayoutsScheduleParams struct {
-	// The number of days charge funds are held before being paid out. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter does not apply when the `interval` is `manual`.
+	// The number of days charge funds are held before being paid out. May also be set to `minimum`, representing the lowest available value for the account country. Default is `minimum`. The `delay_days` parameter remains at the last configured value if `interval` is `manual`. [Learn more about controlling payout delay days](https://stripe.com/docs/connect/manage-payout-schedule).
 	DelayDays        *int64 `form:"delay_days"`
 	DelayDaysMinimum *bool  `form:"-"` // See custom AppendTo
 	// How frequently available funds are paid out. One of: `daily`, `manual`, `weekly`, or `monthly`. Default is `daily`.
@@ -807,10 +843,18 @@ func (p *AccountExternalAccountParams) AppendTo(body *form.Values, keyParts []st
 	}
 }
 
+type AccountBusinessProfileMonthlyEstimatedRevenue struct {
+	// A non-negative integer representing how much to charge in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).
+	Amount int64 `json:"amount"`
+	// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+	Currency Currency `json:"currency"`
+}
+
 // Business information about the account.
 type AccountBusinessProfile struct {
 	// [The merchant category code for the account](https://stripe.com/docs/connect/setting-mcc). MCCs are used to classify businesses based on the goods or services they provide.
-	MCC string `json:"mcc"`
+	MCC                     string                                         `json:"mcc"`
+	MonthlyEstimatedRevenue *AccountBusinessProfileMonthlyEstimatedRevenue `json:"monthly_estimated_revenue"`
 	// The customer-facing business name.
 	Name string `json:"name"`
 	// Internal-only description of the product sold or service provided by the business. It's used by Stripe for risk and underwriting purposes.
@@ -851,6 +895,8 @@ type AccountCapabilities struct {
 	CardPayments AccountCapabilityStatus `json:"card_payments"`
 	// The status of the Cartes Bancaires payments capability of the account, or whether the account can directly process Cartes Bancaires card charges in EUR currency.
 	CartesBancairesPayments AccountCapabilityStatus `json:"cartes_bancaires_payments"`
+	// The status of the Cash App Pay capability of the account, or whether the account can directly process Cash App Pay payments.
+	CashAppPayments AccountCapabilityStatus `json:"cashapp_payments"`
 	// The status of the EPS payments capability of the account, or whether the account can directly process EPS charges.
 	EPSPayments AccountCapabilityStatus `json:"eps_payments"`
 	// The status of the FPX payments capability of the account, or whether the account can directly process FPX charges.
@@ -895,6 +941,8 @@ type AccountCapabilities struct {
 	Treasury AccountCapabilityStatus `json:"treasury"`
 	// The status of the US bank account ACH payments capability of the account, or whether the account can directly process US bank account charges.
 	USBankAccountACHPayments AccountCapabilityStatus `json:"us_bank_account_ach_payments"`
+	// The status of the Zip capability of the account, or whether the account can directly process Zip charges.
+	ZipPayments AccountCapabilityStatus `json:"zip_payments"`
 }
 
 // The Kana variation of the company's primary address (Japan only).
@@ -967,6 +1015,10 @@ type AccountCompany struct {
 	DirectorsProvided bool `json:"directors_provided"`
 	// Whether the company's executives have been provided. This Boolean will be `true` if you've manually indicated that all executives are provided via [the `executives_provided` parameter](https://stripe.com/docs/api/accounts/update#update_account-company-executives_provided), or if Stripe determined that sufficient executives were provided.
 	ExecutivesProvided bool `json:"executives_provided"`
+	// The export license ID number of the company, also referred as Import Export Code (India only).
+	ExportLicenseID string `json:"export_license_id"`
+	// The purpose code to use for export transactions (India only).
+	ExportPurposeCode string `json:"export_purpose_code"`
 	// The company's legal name.
 	Name string `json:"name"`
 	// The Kana variation of the company's legal name (Japan only).
@@ -1183,11 +1235,13 @@ type AccountTOSAcceptance struct {
 }
 
 // This is an object representing a Stripe account. You can retrieve it to see
-// properties on the account like its current e-mail address or if the account is
-// enabled yet to make live charges.
+// properties on the account like its current requirements or if the account is
+// enabled to make live charges or receive payouts.
 //
-// Some properties, marked below, are available only to platforms that want to
-// [create and manage Express or Custom accounts](https://stripe.com/docs/connect/accounts).
+// For Custom accounts, the properties below are always returned. For other accounts, some properties are returned until that
+// account has started to go through Connect Onboarding. Once you create an [Account Link](https://stripe.com/docs/api/account_links)
+// for a Standard or Express account, some parameters are no longer returned. These are marked as **Custom Only** or **Custom and Express**
+// below. Learn about the differences [between accounts](https://stripe.com/docs/connect/accounts).
 type Account struct {
 	APIResource
 	// Business information about the account.
@@ -1208,7 +1262,7 @@ type Account struct {
 	Deleted         bool     `json:"deleted"`
 	// Whether account details have been submitted. Standard accounts cannot receive payouts before this is true.
 	DetailsSubmitted bool `json:"details_submitted"`
-	// An email address associated with the account. You can treat this as metadata: it is not used for authentication or messaging account holders.
+	// An email address associated with the account. It's not used for authentication and Stripe doesn't market to this field without explicit approval from the platform.
 	Email string `json:"email"`
 	// External accounts (bank accounts and debit cards) currently attached to this account
 	ExternalAccounts   *AccountExternalAccountList `json:"external_accounts"`
@@ -1218,9 +1272,9 @@ type Account struct {
 	// This is an object representing a person associated with a Stripe account.
 	//
 	// A platform cannot access a Standard or Express account's persons after the account starts onboarding, such as after generating an account link for the account.
-	// See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform pre-filling and account onboarding steps.
+	// See the [Standard onboarding](https://stripe.com/docs/connect/standard-accounts) or [Express onboarding documentation](https://stripe.com/docs/connect/express-accounts) for information about platform prefilling and account onboarding steps.
 	//
-	// Related guide: [Handling Identity Verification with the API](https://stripe.com/docs/connect/identity-verification-api#person-information).
+	// Related guide: [Handling identity verification with the API](https://stripe.com/docs/connect/identity-verification-api#person-information)
 	Individual *Person `json:"individual"`
 	// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
 	Metadata map[string]string `json:"metadata"`

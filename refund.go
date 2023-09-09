@@ -8,7 +8,7 @@ package stripe
 
 import "encoding/json"
 
-// If the refund failed, the reason for refund failure if known. Possible values are `lost_or_stolen_card`, `expired_or_canceled_card`, or `unknown`.
+// If the refund failed, the reason for refund failure if known. Possible values are `lost_or_stolen_card`, `expired_or_canceled_card`, `charge_for_pending_refund_disputed`, `insufficient_funds`, `declined`, `merchant_request` or `unknown`.
 type RefundFailureReason string
 
 // List of values that RefundFailureReason can take
@@ -34,10 +34,11 @@ type RefundStatus string
 
 // List of values that RefundStatus can take
 const (
-	RefundStatusCanceled  RefundStatus = "canceled"
-	RefundStatusFailed    RefundStatus = "failed"
-	RefundStatusPending   RefundStatus = "pending"
-	RefundStatusSucceeded RefundStatus = "succeeded"
+	RefundStatusCanceled       RefundStatus = "canceled"
+	RefundStatusFailed         RefundStatus = "failed"
+	RefundStatusPending        RefundStatus = "pending"
+	RefundStatusSucceeded      RefundStatus = "succeeded"
+	RefundStatusRequiresAction RefundStatus = "requires_action"
 )
 
 // Returns a list of all refunds you've previously created. The refunds are returned in sorted order, with the most recent refunds appearing first. For convenience, the 10 most recent refunds are always available by default on the charge object.
@@ -61,7 +62,7 @@ type RefundParams struct {
 	Currency *string `form:"currency"`
 	// Customer whose customer balance to refund from.
 	Customer *string `form:"customer"`
-	// Address to send refund email, use customer email if not specified
+	// For payment methods without native refund support (e.g., Konbini, PromptPay), use this email from the customer to receive refund instructions.
 	InstructionsEmail *string `form:"instructions_email"`
 	// Origin of the refund
 	Origin               *string `form:"origin"`
@@ -101,10 +102,10 @@ type RefundNextAction struct {
 // but not yet refunded. Funds will be refunded to the credit or debit card that
 // was originally charged.
 //
-// Related guide: [Refunds](https://stripe.com/docs/refunds).
+// Related guide: [Refunds](https://stripe.com/docs/refunds)
 type Refund struct {
 	APIResource
-	// Amount, in %s.
+	// Amount, in cents (or local equivalent).
 	Amount int64 `json:"amount"`
 	// Balance transaction that describes the impact on your account balance.
 	BalanceTransaction *BalanceTransaction `json:"balance_transaction"`
@@ -118,11 +119,11 @@ type Refund struct {
 	Description string `json:"description"`
 	// If the refund failed, this balance transaction describes the adjustment made on your account balance that reverses the initial balance transaction.
 	FailureBalanceTransaction *BalanceTransaction `json:"failure_balance_transaction"`
-	// If the refund failed, the reason for refund failure if known. Possible values are `lost_or_stolen_card`, `expired_or_canceled_card`, or `unknown`.
+	// If the refund failed, the reason for refund failure if known. Possible values are `lost_or_stolen_card`, `expired_or_canceled_card`, `charge_for_pending_refund_disputed`, `insufficient_funds`, `declined`, `merchant_request` or `unknown`.
 	FailureReason RefundFailureReason `json:"failure_reason"`
 	// Unique identifier for the object.
 	ID string `json:"id"`
-	// Email to which refund instructions, if required, are sent to.
+	// For payment methods without native refund support (e.g., Konbini, PromptPay), email for the customer to receive refund instructions.
 	InstructionsEmail string `json:"instructions_email"`
 	// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format.
 	Metadata   map[string]string `json:"metadata"`

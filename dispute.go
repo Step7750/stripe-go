@@ -178,7 +178,7 @@ type DisputeEvidence struct {
 	UncategorizedText string `json:"uncategorized_text"`
 }
 type DisputeEvidenceDetails struct {
-	// Date by which evidence must be submitted in order to successfully challenge dispute. Will be null if the customer's bank or credit card company doesn't allow a response for this particular dispute.
+	// Date by which evidence must be submitted in order to successfully challenge dispute. Will be 0 if the customer's bank or credit card company doesn't allow a response for this particular dispute.
 	DueBy int64 `json:"due_by"`
 	// Whether evidence has been staged for this dispute.
 	HasEvidence bool `json:"has_evidence"`
@@ -194,7 +194,7 @@ type DisputeEvidenceDetails struct {
 // information about the dispute process in our [Disputes and
 // Fraud](https://stripe.com/docs/disputes) documentation.
 //
-// Related guide: [Disputes and Fraud](https://stripe.com/docs/disputes).
+// Related guide: [Disputes and fraud](https://stripe.com/docs/disputes)
 type Dispute struct {
 	APIResource
 	// Disputed amount. Usually the amount of the charge, but can differ (usually because of currency fluctuation or because only part of the order is disputed).

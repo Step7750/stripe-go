@@ -35,10 +35,10 @@ type FeeRefundListParams struct {
 // has previously been created but not yet refunded. Funds will be refunded to
 // the Stripe account from which the fee was originally collected.
 //
-// Related guide: [Refunding Application Fees](https://stripe.com/docs/connect/destination-charges#refunding-app-fee).
+// Related guide: [Refunding application fees](https://stripe.com/docs/connect/destination-charges#refunding-app-fee)
 type FeeRefund struct {
 	APIResource
-	// Amount, in %s.
+	// Amount, in cents (or local equivalent).
 	Amount int64 `json:"amount"`
 	// Balance transaction that describes the impact on your account balance.
 	BalanceTransaction *BalanceTransaction `json:"balance_transaction"`

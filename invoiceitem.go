@@ -29,9 +29,9 @@ type InvoiceItemDiscountParams struct {
 
 // The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
 type InvoiceItemPeriodParams struct {
-	// The end of the period, which must be greater than or equal to the start.
+	// The end of the period, which must be greater than or equal to the start. This value is inclusive.
 	End *int64 `form:"end"`
-	// The start of the period.
+	// The start of the period. This value is inclusive.
 	Start *int64 `form:"start"`
 }
 
@@ -41,7 +41,7 @@ type InvoiceItemPriceDataParams struct {
 	Currency *string `form:"currency"`
 	// The ID of the product that this price will belong to.
 	Product *string `form:"product"`
-	// Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+	// Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
 	TaxBehavior *string `form:"tax_behavior"`
 	// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
 	UnitAmount *int64 `form:"unit_amount"`
@@ -76,7 +76,7 @@ type InvoiceItemParams struct {
 	Quantity *int64 `form:"quantity"`
 	// The ID of a subscription to add this invoice item to. When left blank, the invoice item will be be added to the next upcoming scheduled invoice. When set, scheduled invoices for subscriptions other than the specified subscription will ignore the invoice item. Use this when you want to express that an invoice item has been accrued within the context of a particular subscription.
 	Subscription *string `form:"subscription"`
-	// Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+	// Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
 	TaxBehavior *string `form:"tax_behavior"`
 	// A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
 	TaxCode *string `form:"tax_code"`
@@ -88,13 +88,17 @@ type InvoiceItemParams struct {
 	UnitAmountDecimal *float64 `form:"unit_amount_decimal,high_precision"`
 }
 
-// Sometimes you want to add a charge or credit to a customer, but actually
-// charge or credit the customer's card only at the end of a regular billing
-// cycle. This is useful for combining several charges (to minimize
-// per-transaction fees), or for having Stripe tabulate your usage-based billing
-// totals.
+// Invoice Items represent the component lines of an [invoice](https://stripe.com/docs/api/invoices). An invoice item is added to an
+// invoice by creating or updating it with an `invoice` field, at which point it will be included as
+// [an invoice line item](https://stripe.com/docs/api/invoices/line_item) within
+// [invoice.lines](https://stripe.com/docs/api/invoices/object#invoice_object-lines).
 //
-// Related guide: [Subscription Invoices](https://stripe.com/docs/billing/invoices/subscription#adding-upcoming-invoice-items).
+// Invoice Items can be created before you are ready to actually send the invoice. This can be particularly useful when combined
+// with a [subscription](https://stripe.com/docs/api/subscriptions). Sometimes you want to add a charge or credit to a customer, but actually charge
+// or credit the customer's card only at the end of a regular billing cycle. This is useful for combining several charges
+// (to minimize per-transaction fees), or for having Stripe tabulate your usage-based billing totals.
+//
+// Related guides: [Integrate with the Invoicing API](https://stripe.com/docs/invoicing/integration), [Subscription Invoices](https://stripe.com/docs/billing/invoices/subscription#adding-upcoming-invoice-items).
 type InvoiceItem struct {
 	APIResource
 	// Amount (in the `currency` specified) of the invoice item. This should always be equal to `unit_amount * quantity`.

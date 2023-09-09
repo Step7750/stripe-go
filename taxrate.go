@@ -13,14 +13,19 @@ type TaxRateTaxType string
 
 // List of values that TaxRateTaxType can take
 const (
-	TaxRateTaxTypeGST      TaxRateTaxType = "gst"
-	TaxRateTaxTypeHST      TaxRateTaxType = "hst"
-	TaxRateTaxTypeJCT      TaxRateTaxType = "jct"
-	TaxRateTaxTypePST      TaxRateTaxType = "pst"
-	TaxRateTaxTypeQST      TaxRateTaxType = "qst"
-	TaxRateTaxTypeRST      TaxRateTaxType = "rst"
-	TaxRateTaxTypeSalesTax TaxRateTaxType = "sales_tax"
-	TaxRateTaxTypeVAT      TaxRateTaxType = "vat"
+	TaxRateTaxTypeAmusementTax      TaxRateTaxType = "amusement_tax"
+	TaxRateTaxTypeCommunicationsTax TaxRateTaxType = "communications_tax"
+	TaxRateTaxTypeGST               TaxRateTaxType = "gst"
+	TaxRateTaxTypeHST               TaxRateTaxType = "hst"
+	TaxRateTaxTypeIGST              TaxRateTaxType = "igst"
+	TaxRateTaxTypeJCT               TaxRateTaxType = "jct"
+	TaxRateTaxTypeLeaseTax          TaxRateTaxType = "lease_tax"
+	TaxRateTaxTypePST               TaxRateTaxType = "pst"
+	TaxRateTaxTypeQST               TaxRateTaxType = "qst"
+	TaxRateTaxTypeRST               TaxRateTaxType = "rst"
+	TaxRateTaxTypeSalesTax          TaxRateTaxType = "sales_tax"
+	TaxRateTaxTypeServiceTax        TaxRateTaxType = "service_tax"
+	TaxRateTaxTypeVAT               TaxRateTaxType = "vat"
 )
 
 // Returns a list of your tax rates. Tax rates are returned sorted by creation date, with the most recently created tax rates appearing first.
@@ -61,7 +66,7 @@ type TaxRateParams struct {
 
 // Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
 //
-// Related guide: [Tax Rates](https://stripe.com/docs/billing/taxes/tax-rates).
+// Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
 type TaxRate struct {
 	APIResource
 	// Defaults to `true`. When set to `false`, this tax rate cannot be used with new applications or Checkout Sessions, but will still work for subscriptions and invoices that already have it set.
@@ -74,6 +79,10 @@ type TaxRate struct {
 	Description string `json:"description"`
 	// The display name of the tax rates as it will appear to your customer on their receipt email, PDF, and the hosted invoice page.
 	DisplayName string `json:"display_name"`
+	// Actual/effective tax rate percentage out of 100. For tax calculations with automatic_tax[enabled]=true,
+	// this percentage reflects the rate actually used to calculate tax based on the product's taxability
+	// and whether the user is registered to collect taxes in the corresponding jurisdiction.
+	EffectivePercentage float64 `json:"effective_percentage"`
 	// Unique identifier for the object.
 	ID string `json:"id"`
 	// This specifies if the tax rate is inclusive or exclusive.
@@ -86,7 +95,7 @@ type TaxRate struct {
 	Metadata map[string]string `json:"metadata"`
 	// String representing the object's type. Objects of the same type share the same value.
 	Object string `json:"object"`
-	// This represents the tax rate percent out of 100.
+	// Tax rate percentage out of 100. For tax calculations with automatic_tax[enabled]=true, this percentage includes the statutory tax rate of non-taxable jurisdictions.
 	Percentage float64 `json:"percentage"`
 	// [ISO 3166-2 subdivision code](https://en.wikipedia.org/wiki/ISO_3166-2:US), without country prefix. For example, "NY" for New York, United States.
 	State string `json:"state"`

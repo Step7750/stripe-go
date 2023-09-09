@@ -77,6 +77,9 @@ import (
 	"github.com/stripe/stripe-go/v74/subscription"
 	"github.com/stripe/stripe-go/v74/subscriptionitem"
 	"github.com/stripe/stripe-go/v74/subscriptionschedule"
+	taxcalculation "github.com/stripe/stripe-go/v74/tax/calculation"
+	taxsettings "github.com/stripe/stripe-go/v74/tax/settings"
+	taxtransaction "github.com/stripe/stripe-go/v74/tax/transaction"
 	"github.com/stripe/stripe-go/v74/taxcode"
 	"github.com/stripe/stripe-go/v74/taxid"
 	"github.com/stripe/stripe-go/v74/taxrate"
@@ -251,12 +254,18 @@ type API struct {
 	Subscriptions *subscription.Client
 	// SubscriptionSchedules is the client used to invoke /subscription_schedules APIs.
 	SubscriptionSchedules *subscriptionschedule.Client
+	// TaxCalculations is the client used to invoke /tax/calculations APIs.
+	TaxCalculations *taxcalculation.Client
 	// TaxCodes is the client used to invoke /tax_codes APIs.
 	TaxCodes *taxcode.Client
 	// TaxIDs is the client used to invoke /customers/{customer}/tax_ids APIs.
 	TaxIDs *taxid.Client
 	// TaxRates is the client used to invoke /tax_rates APIs.
 	TaxRates *taxrate.Client
+	// TaxSettings is the client used to invoke /tax/settings APIs.
+	TaxSettings *taxsettings.Client
+	// TaxTransactions is the client used to invoke /tax/transactions APIs.
+	TaxTransactions *taxtransaction.Client
 	// TerminalConfigurations is the client used to invoke /terminal/configurations APIs.
 	TerminalConfigurations *terminalconfiguration.Client
 	// TerminalConnectionTokens is the client used to invoke /terminal/connection_tokens APIs.
@@ -357,7 +366,7 @@ func (a *API) Init(key string, backends *stripe.Backends) {
 	a.Events = &event.Client{B: backends.API, Key: key}
 	a.FeeRefunds = &feerefund.Client{B: backends.API, Key: key}
 	a.FileLinks = &filelink.Client{B: backends.API, Key: key}
-	a.Files = &file.Client{B: backends.Uploads, Key: key}
+	a.Files = &file.Client{B: backends.Uploads, BUploads: backends.Uploads, Key: key}
 	a.FinancialConnectionsAccounts = &financialconnectionsaccount.Client{B: backends.API, Key: key}
 	a.FinancialConnectionsSessions = &financialconnectionssession.Client{B: backends.API, Key: key}
 	a.IdentityVerificationReports = &identityverificationreport.Client{B: backends.API, Key: key}
@@ -382,7 +391,7 @@ func (a *API) Init(key string, backends *stripe.Backends) {
 	a.Prices = &price.Client{B: backends.API, Key: key}
 	a.Products = &product.Client{B: backends.API, Key: key}
 	a.PromotionCodes = &promotioncode.Client{B: backends.API, Key: key}
-	a.Quotes = &quote.Client{B: backends.API, PDFBackend: backends.Uploads, Key: key}
+	a.Quotes = &quote.Client{B: backends.API, BUploads: backends.Uploads, Key: key}
 	a.RadarEarlyFraudWarnings = &radarearlyfraudwarning.Client{B: backends.API, Key: key}
 	a.RadarValueListItems = &radarvaluelistitem.Client{B: backends.API, Key: key}
 	a.RadarValueLists = &radarvaluelist.Client{B: backends.API, Key: key}
@@ -399,9 +408,12 @@ func (a *API) Init(key string, backends *stripe.Backends) {
 	a.SubscriptionItems = &subscriptionitem.Client{B: backends.API, Key: key}
 	a.Subscriptions = &subscription.Client{B: backends.API, Key: key}
 	a.SubscriptionSchedules = &subscriptionschedule.Client{B: backends.API, Key: key}
+	a.TaxCalculations = &taxcalculation.Client{B: backends.API, Key: key}
 	a.TaxCodes = &taxcode.Client{B: backends.API, Key: key}
 	a.TaxIDs = &taxid.Client{B: backends.API, Key: key}
 	a.TaxRates = &taxrate.Client{B: backends.API, Key: key}
+	a.TaxSettings = &taxsettings.Client{B: backends.API, Key: key}
+	a.TaxTransactions = &taxtransaction.Client{B: backends.API, Key: key}
 	a.TerminalConfigurations = &terminalconfiguration.Client{B: backends.API, Key: key}
 	a.TerminalConnectionTokens = &terminalconnectiontoken.Client{B: backends.API, Key: key}
 	a.TerminalLocations = &terminallocation.Client{B: backends.API, Key: key}

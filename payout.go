@@ -47,6 +47,16 @@ const (
 	PayoutMethodStandard PayoutMethodType = "standard"
 )
 
+// If `completed`, the [Balance Transactions API](https://stripe.com/docs/api/balance_transactions/list#balance_transaction_list-payout) may be used to list all Balance Transactions that were paid out in this payout.
+type PayoutReconciliationStatus string
+
+// List of values that PayoutReconciliationStatus can take
+const (
+	PayoutReconciliationStatusCompleted     PayoutReconciliationStatus = "completed"
+	PayoutReconciliationStatusInProgress    PayoutReconciliationStatus = "in_progress"
+	PayoutReconciliationStatusNotApplicable PayoutReconciliationStatus = "not_applicable"
+)
+
 // The source balance this payout came from. One of `card`, `fpx`, or `bank_account`.
 type PayoutSourceType string
 
@@ -124,10 +134,10 @@ type PayoutReverseParams struct {
 // schedules](https://stripe.com/docs/connect/manage-payout-schedule), depending on your country and
 // industry.
 //
-// Related guide: [Receiving Payouts](https://stripe.com/docs/payouts).
+// Related guide: [Receiving payouts](https://stripe.com/docs/payouts)
 type Payout struct {
 	APIResource
-	// Amount (in %s) to be transferred to your bank account or debit card.
+	// Amount (in cents (or local equivalent)) to be transferred to your bank account or debit card.
 	Amount int64 `json:"amount"`
 	// Date the payout is expected to arrive in the bank. This factors in delays like weekends or bank holidays.
 	ArrivalDate int64 `json:"arrival_date"`
@@ -161,6 +171,8 @@ type Payout struct {
 	Object string `json:"object"`
 	// If the payout reverses another, this is the ID of the original payout.
 	OriginalPayout *Payout `json:"original_payout"`
+	// If `completed`, the [Balance Transactions API](https://stripe.com/docs/api/balance_transactions/list#balance_transaction_list-payout) may be used to list all Balance Transactions that were paid out in this payout.
+	ReconciliationStatus PayoutReconciliationStatus `json:"reconciliation_status"`
 	// If the payout was reversed, this is the ID of the payout that reverses this payout.
 	ReversedBy *Payout `json:"reversed_by"`
 	// The source balance this payout came from. One of `card`, `fpx`, or `bank_account`.

@@ -92,7 +92,7 @@ type IssuingAuthorizationParams struct {
 }
 
 // Approves a pending Issuing Authorization object. This request should be made within the timeout window of the [real-time authorization](https://stripe.com/docs/issuing/controls/real-time-authorizations) flow.
-// You can also respond directly to the webhook request to approve an authorization (preferred). More details can be found [here](https://site-admin.stripe.com/docs/issuing/controls/real-time-authorizations#authorization-handling).
+// You can also respond directly to the webhook request to approve an authorization (preferred). More details can be found [here](https://stripe.com/docs/issuing/controls/real-time-authorizations#authorization-handling).
 type IssuingAuthorizationApproveParams struct {
 	Params `form:"*"`
 	// If the authorization's `pending_request.is_amount_controllable` property is `true`, you may provide this value to control how much to hold for the authorization. Must be positive (use [`decline`](https://stripe.com/docs/api/issuing/authorizations/decline) to decline an authorization request).
@@ -100,7 +100,7 @@ type IssuingAuthorizationApproveParams struct {
 }
 
 // Declines a pending Issuing Authorization object. This request should be made within the timeout window of the [real time authorization](https://stripe.com/docs/issuing/controls/real-time-authorizations) flow.
-// You can also respond directly to the webhook request to decline an authorization (preferred). More details can be found [here](https://site-admin.stripe.com/docs/issuing/controls/real-time-authorizations#authorization-handling).
+// You can also respond directly to the webhook request to decline an authorization (preferred). More details can be found [here](https://stripe.com/docs/issuing/controls/real-time-authorizations#authorization-handling).
 type IssuingAuthorizationDeclineParams struct {
 	Params `form:"*"`
 }
@@ -127,6 +127,8 @@ type IssuingAuthorizationMerchantData struct {
 	PostalCode string `json:"postal_code"`
 	// State where the seller is located
 	State string `json:"state"`
+	// An ID assigned by the seller to the location of the sale.
+	TerminalID string `json:"terminal_id"`
 }
 
 // Details about the authorization, such as identifiers, set by the card network.
@@ -197,7 +199,7 @@ type IssuingAuthorizationVerificationData struct {
 // object is created. [Authorizations](https://stripe.com/docs/issuing/purchases/authorizations) must be approved for the
 // purchase to be completed successfully.
 //
-// Related guide: [Issued Card Authorizations](https://stripe.com/docs/issuing/purchases/authorizations).
+// Related guide: [Issued card authorizations](https://stripe.com/docs/issuing/purchases/authorizations)
 type IssuingAuthorization struct {
 	APIResource
 	// The total amount that was authorized or rejected. This amount is in the card's currency and in the [smallest currency unit](https://stripe.com/docs/currencies#zero-decimal).

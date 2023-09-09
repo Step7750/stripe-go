@@ -115,6 +115,7 @@ const (
 	InvoicePaymentSettingsPaymentMethodTypeBancontact         InvoicePaymentSettingsPaymentMethodType = "bancontact"
 	InvoicePaymentSettingsPaymentMethodTypeBoleto             InvoicePaymentSettingsPaymentMethodType = "boleto"
 	InvoicePaymentSettingsPaymentMethodTypeCard               InvoicePaymentSettingsPaymentMethodType = "card"
+	InvoicePaymentSettingsPaymentMethodTypeCashApp            InvoicePaymentSettingsPaymentMethodType = "cashapp"
 	InvoicePaymentSettingsPaymentMethodTypeCustomerBalance    InvoicePaymentSettingsPaymentMethodType = "customer_balance"
 	InvoicePaymentSettingsPaymentMethodTypeFPX                InvoicePaymentSettingsPaymentMethodType = "fpx"
 	InvoicePaymentSettingsPaymentMethodTypeGiropay            InvoicePaymentSettingsPaymentMethodType = "giropay"
@@ -123,6 +124,7 @@ const (
 	InvoicePaymentSettingsPaymentMethodTypeKonbini            InvoicePaymentSettingsPaymentMethodType = "konbini"
 	InvoicePaymentSettingsPaymentMethodTypeLink               InvoicePaymentSettingsPaymentMethodType = "link"
 	InvoicePaymentSettingsPaymentMethodTypePayNow             InvoicePaymentSettingsPaymentMethodType = "paynow"
+	InvoicePaymentSettingsPaymentMethodTypePaypal             InvoicePaymentSettingsPaymentMethodType = "paypal"
 	InvoicePaymentSettingsPaymentMethodTypePromptPay          InvoicePaymentSettingsPaymentMethodType = "promptpay"
 	InvoicePaymentSettingsPaymentMethodTypeSEPACreditTransfer InvoicePaymentSettingsPaymentMethodType = "sepa_credit_transfer"
 	InvoicePaymentSettingsPaymentMethodTypeSEPADebit          InvoicePaymentSettingsPaymentMethodType = "sepa_debit"
@@ -131,17 +133,63 @@ const (
 	InvoicePaymentSettingsPaymentMethodTypeWeChatPay          InvoicePaymentSettingsPaymentMethodType = "wechat_pay"
 )
 
+// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+type InvoiceShippingCostTaxTaxabilityReason string
+
+// List of values that InvoiceShippingCostTaxTaxabilityReason can take
+const (
+	InvoiceShippingCostTaxTaxabilityReasonCustomerExempt          InvoiceShippingCostTaxTaxabilityReason = "customer_exempt"
+	InvoiceShippingCostTaxTaxabilityReasonExcludedTerritory       InvoiceShippingCostTaxTaxabilityReason = "excluded_territory"
+	InvoiceShippingCostTaxTaxabilityReasonJurisdictionUnsupported InvoiceShippingCostTaxTaxabilityReason = "jurisdiction_unsupported"
+	InvoiceShippingCostTaxTaxabilityReasonNotCollecting           InvoiceShippingCostTaxTaxabilityReason = "not_collecting"
+	InvoiceShippingCostTaxTaxabilityReasonNotSubjectToTax         InvoiceShippingCostTaxTaxabilityReason = "not_subject_to_tax"
+	InvoiceShippingCostTaxTaxabilityReasonNotSupported            InvoiceShippingCostTaxTaxabilityReason = "not_supported"
+	InvoiceShippingCostTaxTaxabilityReasonPortionProductExempt    InvoiceShippingCostTaxTaxabilityReason = "portion_product_exempt"
+	InvoiceShippingCostTaxTaxabilityReasonPortionReducedRated     InvoiceShippingCostTaxTaxabilityReason = "portion_reduced_rated"
+	InvoiceShippingCostTaxTaxabilityReasonPortionStandardRated    InvoiceShippingCostTaxTaxabilityReason = "portion_standard_rated"
+	InvoiceShippingCostTaxTaxabilityReasonProductExempt           InvoiceShippingCostTaxTaxabilityReason = "product_exempt"
+	InvoiceShippingCostTaxTaxabilityReasonProductExemptHoliday    InvoiceShippingCostTaxTaxabilityReason = "product_exempt_holiday"
+	InvoiceShippingCostTaxTaxabilityReasonProportionallyRated     InvoiceShippingCostTaxTaxabilityReason = "proportionally_rated"
+	InvoiceShippingCostTaxTaxabilityReasonReducedRated            InvoiceShippingCostTaxTaxabilityReason = "reduced_rated"
+	InvoiceShippingCostTaxTaxabilityReasonReverseCharge           InvoiceShippingCostTaxTaxabilityReason = "reverse_charge"
+	InvoiceShippingCostTaxTaxabilityReasonStandardRated           InvoiceShippingCostTaxTaxabilityReason = "standard_rated"
+	InvoiceShippingCostTaxTaxabilityReasonTaxableBasisReduced     InvoiceShippingCostTaxTaxabilityReason = "taxable_basis_reduced"
+	InvoiceShippingCostTaxTaxabilityReasonVATExempt               InvoiceShippingCostTaxTaxabilityReason = "vat_exempt"
+	InvoiceShippingCostTaxTaxabilityReasonZeroRated               InvoiceShippingCostTaxTaxabilityReason = "zero_rated"
+)
+
 // The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
 type InvoiceStatus string
 
 // List of values that InvoiceStatus can take
 const (
-	InvoiceStatusDeleted       InvoiceStatus = "deleted"
 	InvoiceStatusDraft         InvoiceStatus = "draft"
 	InvoiceStatusOpen          InvoiceStatus = "open"
 	InvoiceStatusPaid          InvoiceStatus = "paid"
 	InvoiceStatusUncollectible InvoiceStatus = "uncollectible"
 	InvoiceStatusVoid          InvoiceStatus = "void"
+)
+
+// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+type InvoiceTotalTaxAmountTaxabilityReason string
+
+// List of values that InvoiceTotalTaxAmountTaxabilityReason can take
+const (
+	InvoiceTotalTaxAmountTaxabilityReasonCustomerExempt       InvoiceTotalTaxAmountTaxabilityReason = "customer_exempt"
+	InvoiceTotalTaxAmountTaxabilityReasonNotCollecting        InvoiceTotalTaxAmountTaxabilityReason = "not_collecting"
+	InvoiceTotalTaxAmountTaxabilityReasonNotSubjectToTax      InvoiceTotalTaxAmountTaxabilityReason = "not_subject_to_tax"
+	InvoiceTotalTaxAmountTaxabilityReasonNotSupported         InvoiceTotalTaxAmountTaxabilityReason = "not_supported"
+	InvoiceTotalTaxAmountTaxabilityReasonPortionProductExempt InvoiceTotalTaxAmountTaxabilityReason = "portion_product_exempt"
+	InvoiceTotalTaxAmountTaxabilityReasonPortionReducedRated  InvoiceTotalTaxAmountTaxabilityReason = "portion_reduced_rated"
+	InvoiceTotalTaxAmountTaxabilityReasonPortionStandardRated InvoiceTotalTaxAmountTaxabilityReason = "portion_standard_rated"
+	InvoiceTotalTaxAmountTaxabilityReasonProductExempt        InvoiceTotalTaxAmountTaxabilityReason = "product_exempt"
+	InvoiceTotalTaxAmountTaxabilityReasonProductExemptHoliday InvoiceTotalTaxAmountTaxabilityReason = "product_exempt_holiday"
+	InvoiceTotalTaxAmountTaxabilityReasonProportionallyRated  InvoiceTotalTaxAmountTaxabilityReason = "proportionally_rated"
+	InvoiceTotalTaxAmountTaxabilityReasonReducedRated         InvoiceTotalTaxAmountTaxabilityReason = "reduced_rated"
+	InvoiceTotalTaxAmountTaxabilityReasonReverseCharge        InvoiceTotalTaxAmountTaxabilityReason = "reverse_charge"
+	InvoiceTotalTaxAmountTaxabilityReasonStandardRated        InvoiceTotalTaxAmountTaxabilityReason = "standard_rated"
+	InvoiceTotalTaxAmountTaxabilityReasonTaxableBasisReduced  InvoiceTotalTaxAmountTaxabilityReason = "taxable_basis_reduced"
+	InvoiceTotalTaxAmountTaxabilityReasonZeroRated            InvoiceTotalTaxAmountTaxabilityReason = "zero_rated"
 )
 
 // Search for invoices you've previously created using Stripe's [Search Query Language](https://stripe.com/docs/search#search-query-language).
@@ -154,38 +202,54 @@ type InvoiceSearchParams struct {
 	Page *string `form:"page"`
 }
 
-// You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
-type InvoiceListParams struct {
-	ListParams `form:"*"`
-	// The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
-	CollectionMethod *string           `form:"collection_method"`
-	Created          *int64            `form:"created"`
-	CreatedRange     *RangeQueryParams `form:"created"`
-	// Only return invoices for the customer specified by this customer ID.
-	Customer     *string           `form:"customer"`
-	DueDate      *int64            `form:"due_date"`
-	DueDateRange *RangeQueryParams `form:"due_date"`
-	// The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
-	Status *string `form:"status"`
-	// Only return invoices for the subscription specified by this subscription ID.
-	Subscription *string `form:"subscription"`
-}
-
-// Settings for automatic tax lookup for this invoice.
+// Settings for automatic tax lookup for this invoice preview.
 type InvoiceAutomaticTaxParams struct {
 	// Whether Stripe automatically computes tax on this invoice. Note that incompatible invoice items (invoice items with manually specified [tax rates](https://stripe.com/docs/api/tax_rates), negative amounts, or `tax_behavior=unspecified`) cannot be added to automatic tax invoices.
 	Enabled *bool `form:"enabled"`
 }
+type InvoiceUpcomingAutomaticTaxParams struct {
+	Enabled *bool `form:"enabled"`
+}
 
-// A list of up to 4 custom fields to be displayed on the invoice.
-type InvoiceCustomFieldParams struct {
-	// The name of the custom field. This may be up to 30 characters.
+// The customer's shipping information. Appears on invoices emailed to this customer.
+type InvoiceUpcomingCustomerDetailsShippingParams struct {
+	// Customer shipping address.
+	Address *AddressParams `form:"address"`
+	// Customer name.
 	Name *string `form:"name"`
-	// The value of the custom field. This may be up to 30 characters.
+	// Customer phone (including extension).
+	Phone *string `form:"phone"`
+}
+
+// Tax details about the customer.
+type InvoiceUpcomingCustomerDetailsTaxParams struct {
+	// A recent IP address of the customer used for tax reporting and tax location inference. Stripe recommends updating the IP address when a new PaymentMethod is attached or the address field on the customer is updated. We recommend against updating this field more frequently since it could result in unexpected tax location/reporting outcomes.
+	IPAddress *string `form:"ip_address"`
+}
+
+// The customer's tax IDs.
+type InvoiceUpcomingCustomerDetailsTaxIDParams struct {
+	// Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
+	Type *string `form:"type"`
+	// Value of the tax ID.
 	Value *string `form:"value"`
 }
 
-// The coupons to redeem into discounts for the invoice. If not specified, inherits the discount from the invoice's customer. Pass an empty string to avoid inheriting any discounts.
+// Details about the customer you want to invoice or overrides for an existing customer. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
+type InvoiceUpcomingCustomerDetailsParams struct {
+	// The customer's address.
+	Address *AddressParams `form:"address"`
+	// The customer's shipping information. Appears on invoices emailed to this customer.
+	Shipping *InvoiceUpcomingCustomerDetailsShippingParams `form:"shipping"`
+	// Tax details about the customer.
+	Tax *InvoiceUpcomingCustomerDetailsTaxParams `form:"tax"`
+	// The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
+	TaxExempt *string `form:"tax_exempt"`
+	// The customer's tax IDs.
+	TaxIDs []*InvoiceUpcomingCustomerDetailsTaxIDParams `form:"tax_ids"`
+}
+
+// The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This only works for coupons directly applied to the invoice. To apply a coupon to a subscription, you must use the `coupon` parameter instead. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
 type InvoiceDiscountParams struct {
 	// ID of the coupon to create a new discount for.
 	Coupon *string `form:"coupon"`
@@ -193,12 +257,123 @@ type InvoiceDiscountParams struct {
 	Discount *string `form:"discount"`
 }
 
-// Revise an existing invoice. The new invoice will be created in `status=draft`. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
-type InvoiceFromInvoiceParams struct {
-	// The relation between the new invoice and the original invoice. Currently, only 'revision' is permitted
-	Action *string `form:"action"`
-	// The `id` of the invoice that will be cloned.
-	Invoice *string `form:"invoice"`
+// The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+type InvoiceUpcomingInvoiceItemPeriodParams struct {
+	// The end of the period, which must be greater than or equal to the start. This value is inclusive.
+	End *int64 `form:"end"`
+	// The start of the period. This value is inclusive.
+	Start *int64 `form:"start"`
+}
+
+// List of invoice items to add or update in the upcoming invoice preview.
+type InvoiceUpcomingInvoiceItemParams struct {
+	// The integer amount in cents (or local equivalent) of previewed invoice item.
+	Amount *int64 `form:"amount"`
+	// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Only applicable to new invoice items.
+	Currency *string `form:"currency"`
+	// An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
+	Description *string `form:"description"`
+	// Explicitly controls whether discounts apply to this invoice item. Defaults to true, except for negative invoice items.
+	Discountable *bool `form:"discountable"`
+	// The coupons to redeem into discounts for the invoice item in the preview.
+	Discounts []*InvoiceItemDiscountParams `form:"discounts"`
+	// The ID of the invoice item to update in preview. If not specified, a new invoice item will be added to the preview of the upcoming invoice.
+	InvoiceItem *string `form:"invoiceitem"`
+	// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+	Metadata map[string]string `form:"metadata"`
+	// The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
+	Period *InvoiceUpcomingInvoiceItemPeriodParams `form:"period"`
+	// The ID of the price object.
+	Price *string `form:"price"`
+	// Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
+	PriceData *InvoiceItemPriceDataParams `form:"price_data"`
+	// Non-negative integer. The quantity of units for the invoice item.
+	Quantity *int64 `form:"quantity"`
+	// Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+	TaxBehavior *string `form:"tax_behavior"`
+	// A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
+	TaxCode *string `form:"tax_code"`
+	// The tax rates that apply to the item. When set, any `default_tax_rates` do not apply to this item.
+	TaxRates []*string `form:"tax_rates"`
+	// The integer unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
+	UnitAmount *int64 `form:"unit_amount"`
+	// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
+	UnitAmountDecimal *float64 `form:"unit_amount_decimal,high_precision"`
+}
+
+// At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.
+//
+// Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
+//
+// You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass a proration_date parameter when doing the actual subscription update. The value passed in should be the same as the subscription_proration_date returned on the upcoming invoice resource. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_proration_date on the upcoming invoice resource.
+type InvoiceUpcomingParams struct {
+	Params `form:"*"`
+	// Settings for automatic tax lookup for this invoice preview.
+	AutomaticTax *InvoiceAutomaticTaxParams `form:"automatic_tax"`
+	// The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
+	Coupon *string `form:"coupon"`
+	// The currency to preview this invoice in. Defaults to that of `customer` if not specified.
+	Currency *string `form:"currency"`
+	// The identifier of the customer whose upcoming invoice you'd like to retrieve. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
+	Customer *string `form:"customer"`
+	// Details about the customer you want to invoice or overrides for an existing customer. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
+	CustomerDetails *InvoiceUpcomingCustomerDetailsParams `form:"customer_details"`
+	// The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This only works for coupons directly applied to the invoice. To apply a coupon to a subscription, you must use the `coupon` parameter instead. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
+	Discounts []*InvoiceDiscountParams `form:"discounts"`
+	// List of invoice items to add or update in the upcoming invoice preview.
+	InvoiceItems []*InvoiceUpcomingInvoiceItemParams `form:"invoice_items"`
+	// The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
+	Schedule *string `form:"schedule"`
+	// The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
+	Subscription *string `form:"subscription"`
+	// For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
+	SubscriptionBillingCycleAnchor          *int64 `form:"subscription_billing_cycle_anchor"`
+	SubscriptionBillingCycleAnchorNow       *bool  `form:"-"` // See custom AppendTo
+	SubscriptionBillingCycleAnchorUnchanged *bool  `form:"-"` // See custom AppendTo
+	// Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.
+	SubscriptionCancelAt *int64 `form:"subscription_cancel_at"`
+	// Boolean indicating whether this subscription should cancel at the end of the current period.
+	SubscriptionCancelAtPeriodEnd *bool `form:"subscription_cancel_at_period_end"`
+	// This simulates the subscription being canceled or expired immediately.
+	SubscriptionCancelNow *bool `form:"subscription_cancel_now"`
+	// If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
+	SubscriptionDefaultTaxRates []*string `form:"subscription_default_tax_rates"`
+	// A list of up to 20 subscription items, each with an attached price.
+	SubscriptionItems []*SubscriptionItemsParams `form:"subscription_items"`
+	// Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
+	SubscriptionProrationBehavior *string `form:"subscription_proration_behavior"`
+	// If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
+	SubscriptionProrationDate *int64 `form:"subscription_proration_date"`
+	// For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+	SubscriptionResumeAt *string `form:"subscription_resume_at"`
+	// Date a subscription is intended to start (can be future or past)
+	SubscriptionStartDate *int64 `form:"subscription_start_date"`
+	// If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
+	SubscriptionTrialEnd    *int64 `form:"subscription_trial_end"`
+	SubscriptionTrialEndNow *bool  `form:"-"` // See custom AppendTo
+	// Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
+	SubscriptionTrialFromPlan *bool `form:"subscription_trial_from_plan"`
+}
+
+// AppendTo implements custom encoding logic for InvoiceUpcomingParams.
+func (i *InvoiceUpcomingParams) AppendTo(body *form.Values, keyParts []string) {
+	if BoolValue(i.SubscriptionBillingCycleAnchorNow) {
+		body.Add(form.FormatKey(append(keyParts, "subscription_billing_cycle_anchor")), "now")
+	}
+	if BoolValue(i.SubscriptionBillingCycleAnchorUnchanged) {
+		body.Add(form.FormatKey(append(keyParts, "subscription_billing_cycle_anchor")), "unchanged")
+	}
+	if BoolValue(i.SubscriptionTrialEndNow) {
+		body.Add(form.FormatKey(append(keyParts, "subscription_trial_end")), "now")
+	}
+}
+
+// A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice. Pass an empty string to remove previously-defined fields.
+type InvoiceCustomFieldParams struct {
+	// The name of the custom field. This may be up to 30 characters.
+	Name *string `form:"name"`
+	// The value of the custom field. This may be up to 30 characters.
+	Value *string `form:"value"`
 }
 
 // Additional fields for Mandate creation
@@ -255,7 +430,7 @@ type InvoicePaymentSettingsPaymentMethodOptionsCardParams struct {
 
 // Configuration for eu_bank_transfer funding type.
 type InvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransferEUBankTransferParams struct {
-	// The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+	// The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
 	Country *string `form:"country"`
 }
 
@@ -263,7 +438,7 @@ type InvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransferEUBank
 type InvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransferParams struct {
 	// Configuration for eu_bank_transfer funding type.
 	EUBankTransfer *InvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransferEUBankTransferParams `form:"eu_bank_transfer"`
-	// The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
+	// The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
 	Type *string `form:"type"`
 }
 
@@ -324,7 +499,85 @@ type InvoiceRenderingOptionsParams struct {
 	AmountTaxDisplay *string `form:"amount_tax_display"`
 }
 
-// If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge.
+// The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
+type InvoiceShippingCostShippingRateDataDeliveryEstimateMaximumParams struct {
+	// A unit of time.
+	Unit *string `form:"unit"`
+	// Must be greater than 0.
+	Value *int64 `form:"value"`
+}
+
+// The lower bound of the estimated range. If empty, represents no lower bound.
+type InvoiceShippingCostShippingRateDataDeliveryEstimateMinimumParams struct {
+	// A unit of time.
+	Unit *string `form:"unit"`
+	// Must be greater than 0.
+	Value *int64 `form:"value"`
+}
+
+// The estimated range for how long shipping will take, meant to be displayable to the customer. This will appear on CheckoutSessions.
+type InvoiceShippingCostShippingRateDataDeliveryEstimateParams struct {
+	// The upper bound of the estimated range. If empty, represents no upper bound i.e., infinite.
+	Maximum *InvoiceShippingCostShippingRateDataDeliveryEstimateMaximumParams `form:"maximum"`
+	// The lower bound of the estimated range. If empty, represents no lower bound.
+	Minimum *InvoiceShippingCostShippingRateDataDeliveryEstimateMinimumParams `form:"minimum"`
+}
+
+// Shipping rates defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+type InvoiceShippingCostShippingRateDataFixedAmountCurrencyOptionsParams struct {
+	// A non-negative integer in cents representing how much to charge.
+	Amount *int64 `form:"amount"`
+	// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+	TaxBehavior *string `form:"tax_behavior"`
+}
+
+// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
+type InvoiceShippingCostShippingRateDataFixedAmountParams struct {
+	// A non-negative integer in cents representing how much to charge.
+	Amount *int64 `form:"amount"`
+	// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies).
+	Currency *string `form:"currency"`
+	// Shipping rates defined in each available currency option. Each key must be a three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html) and a [supported currency](https://stripe.com/docs/currencies).
+	CurrencyOptions map[string]*InvoiceShippingCostShippingRateDataFixedAmountCurrencyOptionsParams `form:"currency_options"`
+}
+
+// Parameters to create a new ad-hoc shipping rate for this order.
+type InvoiceShippingCostShippingRateDataParams struct {
+	// The estimated range for how long shipping will take, meant to be displayable to the customer. This will appear on CheckoutSessions.
+	DeliveryEstimate *InvoiceShippingCostShippingRateDataDeliveryEstimateParams `form:"delivery_estimate"`
+	// The name of the shipping rate, meant to be displayable to the customer. This will appear on CheckoutSessions.
+	DisplayName *string `form:"display_name"`
+	// Describes a fixed amount to charge for shipping. Must be present if type is `fixed_amount`.
+	FixedAmount *InvoiceShippingCostShippingRateDataFixedAmountParams `form:"fixed_amount"`
+	// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
+	Metadata map[string]string `form:"metadata"`
+	// Specifies whether the rate is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`.
+	TaxBehavior *string `form:"tax_behavior"`
+	// A [tax code](https://stripe.com/docs/tax/tax-categories) ID. The Shipping tax code is `txcd_92010001`.
+	TaxCode *string `form:"tax_code"`
+	// The type of calculation to use on the shipping rate. Can only be `fixed_amount` for now.
+	Type *string `form:"type"`
+}
+
+// Settings for the cost of shipping for this invoice.
+type InvoiceShippingCostParams struct {
+	// The ID of the shipping rate to use for this order.
+	ShippingRate *string `form:"shipping_rate"`
+	// Parameters to create a new ad-hoc shipping rate for this order.
+	ShippingRateData *InvoiceShippingCostShippingRateDataParams `form:"shipping_rate_data"`
+}
+
+// Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is set, otherwise the PDF will render the shipping address from the customer.
+type InvoiceShippingDetailsParams struct {
+	// Shipping address
+	Address *AddressParams `form:"address"`
+	// Recipient name.
+	Name *string `form:"name"`
+	// Recipient phone (including extension)
+	Phone *string `form:"phone"`
+}
+
+// If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
 type InvoiceTransferDataParams struct {
 	// The amount that will be transferred automatically when the invoice is paid. If no amount is set, the full amount is transferred.
 	Amount *int64 `form:"amount"`
@@ -332,26 +585,31 @@ type InvoiceTransferDataParams struct {
 	Destination *string `form:"destination"`
 }
 
-// This endpoint creates a draft invoice for a given customer. The invoice remains a draft until you [finalize the invoice, which allows you to [pay](#pay_invoice) or <a href="#send_invoice">send](https://stripe.com/docs/api#finalize_invoice) the invoice to your customers.
+// Draft invoices are fully editable. Once an invoice is [finalized](https://stripe.com/docs/billing/invoices/workflow#finalized),
+// monetary values, as well as collection_method, become uneditable.
+//
+// If you would like to stop the Stripe Billing engine from automatically finalizing, reattempting payments on,
+// sending reminders for, or [automatically reconciling](https://stripe.com/docs/billing/invoices/reconciliation) invoices, pass
+// auto_advance=false.
 type InvoiceParams struct {
 	Params `form:"*"`
 	// The account tax IDs associated with the invoice. Only editable when the invoice is a draft.
 	AccountTaxIDs []*string `form:"account_tax_ids"`
 	// A fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account. The request must be made with an OAuth key or the Stripe-Account header in order to take an application fee. For more information, see the application fees [documentation](https://stripe.com/docs/billing/invoices/connect#collecting-fees).
 	ApplicationFeeAmount *int64 `form:"application_fee_amount"`
-	// Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice.
+	// Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
 	AutoAdvance *bool `form:"auto_advance"`
 	// Settings for automatic tax lookup for this invoice.
 	AutomaticTax *InvoiceAutomaticTaxParams `form:"automatic_tax"`
-	// Either `charge_automatically` or `send_invoice`. This field can be updated only on `draft` invoices.
+	// Either `charge_automatically`, or `send_invoice`. When charging automatically, Stripe will attempt to pay this invoice using the default source attached to the customer. When sending an invoice, Stripe will email this invoice to the customer with payment instructions. Defaults to `charge_automatically`.
 	CollectionMethod *string `form:"collection_method"`
 	// The currency to create this invoice in. Defaults to that of `customer` if not specified.
 	Currency *string `form:"currency"`
 	// The ID of the customer who will be billed.
 	Customer *string `form:"customer"`
-	// A list of up to 4 custom fields to be displayed on the invoice. If a value for `custom_fields` is specified, the list specified will replace the existing custom field list on this invoice. Pass an empty string to remove previously-defined fields.
+	// A list of up to 4 custom fields to be displayed on the invoice.
 	CustomFields []*InvoiceCustomFieldParams `form:"custom_fields"`
-	// The number of days from which the invoice is created until it is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
+	// The number of days from when the invoice is created until it is due. Valid only for invoices where `collection_method=send_invoice`.
 	DaysUntilDue *int64 `form:"days_until_due"`
 	// ID of the default payment method for the invoice. It must belong to the customer associated with the invoice. If not set, defaults to the subscription's default payment method, if any, or to the default payment method in the customer's invoice settings.
 	DefaultPaymentMethod *string `form:"default_payment_method"`
@@ -361,10 +619,12 @@ type InvoiceParams struct {
 	DefaultTaxRates []*string `form:"default_tax_rates"`
 	// An arbitrary string attached to the object. Often useful for displaying to users. Referenced as 'memo' in the Dashboard.
 	Description *string `form:"description"`
-	// The discounts that will apply to the invoice. Pass an empty string to remove previously-defined discounts.
+	// The coupons to redeem into discounts for the invoice. If not specified, inherits the discount from the invoice's customer. Pass an empty string to avoid inheriting any discounts.
 	Discounts []*InvoiceDiscountParams `form:"discounts"`
-	// The date on which payment for this invoice is due. Only valid for invoices where `collection_method=send_invoice`. This field can only be updated on `draft` invoices.
+	// The date on which payment for this invoice is due. Valid only for invoices where `collection_method=send_invoice`.
 	DueDate *int64 `form:"due_date"`
+	// The date when this invoice is in effect. Same as `finalized_at` unless overwritten. When defined, this value replaces the system-generated 'Date of issue' printed on the invoice PDF and receipt.
+	EffectiveAt *int64 `form:"effective_at"`
 	// Footer to be displayed on the invoice.
 	Footer *string `form:"footer"`
 	// Revise an existing invoice. The new invoice will be created in `status=draft`. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
@@ -377,162 +637,16 @@ type InvoiceParams struct {
 	PendingInvoiceItemsBehavior *string `form:"pending_invoice_items_behavior"`
 	// Options for invoice PDF rendering.
 	RenderingOptions *InvoiceRenderingOptionsParams `form:"rendering_options"`
+	// Settings for the cost of shipping for this invoice.
+	ShippingCost *InvoiceShippingCostParams `form:"shipping_cost"`
+	// Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is set, otherwise the PDF will render the shipping address from the customer.
+	ShippingDetails *InvoiceShippingDetailsParams `form:"shipping_details"`
 	// Extra information about a charge for the customer's credit card statement. It must contain at least one letter. If not specified and this invoice is part of a subscription, the default `statement_descriptor` will be set to the first subscription item's product's `statement_descriptor`.
 	StatementDescriptor *string `form:"statement_descriptor"`
 	// The ID of the subscription to invoice, if any. If set, the created invoice will only include pending invoice items for that subscription. The subscription's billing cycle and regular subscription events won't be affected.
 	Subscription *string `form:"subscription"`
 	// If specified, the funds from the invoice will be transferred to the destination and the ID of the resulting transfer will be found on the invoice's charge. This will be unset if you POST an empty value.
 	TransferData *InvoiceTransferDataParams `form:"transfer_data"`
-}
-type InvoiceUpcomingAutomaticTaxParams struct {
-	Enabled *bool `form:"enabled"`
-}
-
-// The customer's shipping information. Appears on invoices emailed to this customer.
-type InvoiceUpcomingCustomerDetailsShippingParams struct {
-	// Customer shipping address.
-	Address *AddressParams `form:"address"`
-	// Customer name.
-	Name *string `form:"name"`
-	// Customer phone (including extension).
-	Phone *string `form:"phone"`
-}
-
-// Tax details about the customer.
-type InvoiceUpcomingCustomerDetailsTaxParams struct {
-	// A recent IP address of the customer used for tax reporting and tax location inference. Stripe recommends updating the IP address when a new PaymentMethod is attached or the address field on the customer is updated. We recommend against updating this field more frequently since it could result in unexpected tax location/reporting outcomes.
-	IPAddress *string `form:"ip_address"`
-}
-
-// The customer's tax IDs.
-type InvoiceUpcomingCustomerDetailsTaxIDParams struct {
-	// Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ph_tin`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
-	Type *string `form:"type"`
-	// Value of the tax ID.
-	Value *string `form:"value"`
-}
-
-// Details about the customer you want to invoice or overrides for an existing customer.
-type InvoiceUpcomingCustomerDetailsParams struct {
-	// The customer's address.
-	Address *AddressParams `form:"address"`
-	// The customer's shipping information. Appears on invoices emailed to this customer.
-	Shipping *InvoiceUpcomingCustomerDetailsShippingParams `form:"shipping"`
-	// Tax details about the customer.
-	Tax *InvoiceUpcomingCustomerDetailsTaxParams `form:"tax"`
-	// The customer's tax exemption. One of `none`, `exempt`, or `reverse`.
-	TaxExempt *string `form:"tax_exempt"`
-	// The customer's tax IDs.
-	TaxIDs []*InvoiceUpcomingCustomerDetailsTaxIDParams `form:"tax_ids"`
-}
-
-// The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
-type InvoiceUpcomingInvoiceItemPeriodParams struct {
-	// The end of the period, which must be greater than or equal to the start.
-	End *int64 `form:"end"`
-	// The start of the period.
-	Start *int64 `form:"start"`
-}
-
-// List of invoice items to add or update in the upcoming invoice preview.
-type InvoiceUpcomingInvoiceItemParams struct {
-	// The integer amount in cents (or local equivalent) of previewed invoice item.
-	Amount *int64 `form:"amount"`
-	// Three-letter [ISO currency code](https://www.iso.org/iso-4217-currency-codes.html), in lowercase. Must be a [supported currency](https://stripe.com/docs/currencies). Only applicable to new invoice items.
-	Currency *string `form:"currency"`
-	// An arbitrary string which you can attach to the invoice item. The description is displayed in the invoice for easy tracking.
-	Description *string `form:"description"`
-	// Explicitly controls whether discounts apply to this invoice item. Defaults to true, except for negative invoice items.
-	Discountable *bool `form:"discountable"`
-	// The coupons to redeem into discounts for the invoice item in the preview.
-	Discounts []*InvoiceItemDiscountParams `form:"discounts"`
-	// The ID of the invoice item to update in preview. If not specified, a new invoice item will be added to the preview of the upcoming invoice.
-	InvoiceItem *string `form:"invoiceitem"`
-	// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that you can attach to an object. This can be useful for storing additional information about the object in a structured format. Individual keys can be unset by posting an empty value to them. All keys can be unset by posting an empty value to `metadata`.
-	Metadata map[string]string `form:"metadata"`
-	// The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
-	Period *InvoiceUpcomingInvoiceItemPeriodParams `form:"period"`
-	// The ID of the price object.
-	Price *string `form:"price"`
-	// Data used to generate a new [Price](https://stripe.com/docs/api/prices) object inline.
-	PriceData *InvoiceItemPriceDataParams `form:"price_data"`
-	// Non-negative integer. The quantity of units for the invoice item.
-	Quantity *int64 `form:"quantity"`
-	// Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
-	TaxBehavior *string `form:"tax_behavior"`
-	// A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
-	TaxCode *string `form:"tax_code"`
-	// The tax rates that apply to the item. When set, any `default_tax_rates` do not apply to this item.
-	TaxRates []*string `form:"tax_rates"`
-	// The integer unit amount in cents (or local equivalent) of the charge to be applied to the upcoming invoice. This unit_amount will be multiplied by the quantity to get the full amount. If you want to apply a credit to the customer's account, pass a negative unit_amount.
-	UnitAmount *int64 `form:"unit_amount"`
-	// Same as `unit_amount`, but accepts a decimal value in cents (or local equivalent) with at most 12 decimal places. Only one of `unit_amount` and `unit_amount_decimal` can be set.
-	UnitAmountDecimal *float64 `form:"unit_amount_decimal,high_precision"`
-}
-
-// At any time, you can preview the upcoming invoice for a customer. This will show you all the charges that are pending, including subscription renewal charges, invoice item charges, etc. It will also show you any discounts that are applicable to the invoice.
-//
-// Note that when you are viewing an upcoming invoice, you are simply viewing a preview – the invoice has not yet been created. As such, the upcoming invoice will not show up in invoice listing calls, and you cannot use the API to pay or edit the invoice. If you want to change the amount that your customer will be billed, you can add, remove, or update pending invoice items, or update the customer's discount.
-//
-// You can preview the effects of updating a subscription, including a preview of what proration will take place. To ensure that the actual proration is calculated exactly the same as the previewed proration, you should pass a proration_date parameter when doing the actual subscription update. The value passed in should be the same as the subscription_proration_date returned on the upcoming invoice resource. The recommended way to get only the prorations being previewed is to consider only proration line items where period[start] is equal to the subscription_proration_date on the upcoming invoice resource.
-type InvoiceUpcomingParams struct {
-	Params `form:"*"`
-	// Settings for automatic tax lookup for this invoice preview.
-	AutomaticTax *InvoiceAutomaticTaxParams `form:"automatic_tax"`
-	// The code of the coupon to apply. If `subscription` or `subscription_items` is provided, the invoice returned will preview updating or creating a subscription with that coupon. Otherwise, it will preview applying that coupon to the customer for the next upcoming invoice from among the customer's subscriptions. The invoice can be previewed without a coupon by passing this value as an empty string.
-	Coupon *string `form:"coupon"`
-	// The currency to preview this invoice in. Defaults to that of `customer` if not specified.
-	Currency *string `form:"currency"`
-	// The identifier of the customer whose upcoming invoice you'd like to retrieve.
-	Customer *string `form:"customer"`
-	// Details about the customer you want to invoice or overrides for an existing customer.
-	CustomerDetails *InvoiceUpcomingCustomerDetailsParams `form:"customer_details"`
-	// The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This only works for coupons directly applied to the invoice. To apply a coupon to a subscription, you must use the `coupon` parameter instead. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
-	Discounts []*InvoiceDiscountParams `form:"discounts"`
-	// List of invoice items to add or update in the upcoming invoice preview.
-	InvoiceItems []*InvoiceUpcomingInvoiceItemParams `form:"invoice_items"`
-	// The identifier of the unstarted schedule whose upcoming invoice you'd like to retrieve. Cannot be used with subscription or subscription fields.
-	Schedule *string `form:"schedule"`
-	// The identifier of the subscription for which you'd like to retrieve the upcoming invoice. If not provided, but a `subscription_items` is provided, you will preview creating a subscription with those items. If neither `subscription` nor `subscription_items` is provided, you will retrieve the next upcoming invoice from among the customer's subscriptions.
-	Subscription *string `form:"subscription"`
-	// For new subscriptions, a future timestamp to anchor the subscription's [billing cycle](https://stripe.com/docs/subscriptions/billing-cycle). This is used to determine the date of the first full invoice, and, for plans with `month` or `year` intervals, the day of the month for subsequent invoices. For existing subscriptions, the value can only be set to `now` or `unchanged`.
-	SubscriptionBillingCycleAnchor          *int64 `form:"subscription_billing_cycle_anchor"`
-	SubscriptionBillingCycleAnchorNow       *bool  `form:"-"` // See custom AppendTo
-	SubscriptionBillingCycleAnchorUnchanged *bool  `form:"-"` // See custom AppendTo
-	// Timestamp indicating when the subscription should be scheduled to cancel. Will prorate if within the current period and prorations have been enabled using `proration_behavior`.
-	SubscriptionCancelAt *int64 `form:"subscription_cancel_at"`
-	// Boolean indicating whether this subscription should cancel at the end of the current period.
-	SubscriptionCancelAtPeriodEnd *bool `form:"subscription_cancel_at_period_end"`
-	// This simulates the subscription being canceled or expired immediately.
-	SubscriptionCancelNow *bool `form:"subscription_cancel_now"`
-	// If provided, the invoice returned will preview updating or creating a subscription with these default tax rates. The default tax rates will apply to any line item that does not have `tax_rates` set.
-	SubscriptionDefaultTaxRates []*string `form:"subscription_default_tax_rates"`
-	// A list of up to 20 subscription items, each with an attached price.
-	SubscriptionItems []*SubscriptionItemsParams `form:"subscription_items"`
-	// Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
-	SubscriptionProrationBehavior *string `form:"subscription_proration_behavior"`
-	// If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
-	SubscriptionProrationDate *int64 `form:"subscription_proration_date"`
-	// Date a subscription is intended to start (can be future or past)
-	SubscriptionStartDate *int64 `form:"subscription_start_date"`
-	// If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
-	SubscriptionTrialEnd    *int64 `form:"subscription_trial_end"`
-	SubscriptionTrialEndNow *bool  `form:"-"` // See custom AppendTo
-	// Indicates if a plan's `trial_period_days` should be applied to the subscription. Setting `subscription_trial_end` per subscription is preferred, and this defaults to `false`. Setting this flag to `true` together with `subscription_trial_end` is not allowed. See [Using trial periods on subscriptions](https://stripe.com/docs/billing/subscriptions/trials) to learn more.
-	SubscriptionTrialFromPlan *bool `form:"subscription_trial_from_plan"`
-}
-
-// AppendTo implements custom encoding logic for InvoiceUpcomingParams.
-func (i *InvoiceUpcomingParams) AppendTo(body *form.Values, keyParts []string) {
-	if BoolValue(i.SubscriptionBillingCycleAnchorNow) {
-		body.Add(form.FormatKey(append(keyParts, "subscription_billing_cycle_anchor")), "now")
-	}
-	if BoolValue(i.SubscriptionBillingCycleAnchorUnchanged) {
-		body.Add(form.FormatKey(append(keyParts, "subscription_billing_cycle_anchor")), "unchanged")
-	}
-	if BoolValue(i.SubscriptionTrialEndNow) {
-		body.Add(form.FormatKey(append(keyParts, "subscription_trial_end")), "now")
-	}
 }
 
 // Stripe automatically creates and then attempts to collect payment on invoices for customers on subscriptions according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to attempt payment on an invoice out of the normal collection schedule or for some other reason, you can do so.
@@ -552,13 +666,6 @@ type InvoicePayParams struct {
 	PaymentMethod *string `form:"payment_method"`
 	// A payment source to be charged. The source must be the ID of a source belonging to the customer associated with the invoice being paid.
 	Source *string `form:"source"`
-}
-
-// Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
-type InvoiceFinalizeInvoiceParams struct {
-	Params `form:"*"`
-	// Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/invoicing/automatic-charging) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
-	AutoAdvance *bool `form:"auto_advance"`
 }
 
 // Settings for automatic tax lookup for this invoice preview.
@@ -585,13 +692,13 @@ type InvoiceUpcomingLinesCustomerDetailsTaxParams struct {
 
 // The customer's tax IDs.
 type InvoiceUpcomingLinesCustomerDetailsTaxIDParams struct {
-	// Type of the tax ID, one of `ae_trn`, `au_abn`, `au_arn`, `bg_uic`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `ph_tin`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, or `za_vat`
+	// Type of the tax ID, one of `ad_nrt`, `ae_trn`, `ar_cuit`, `au_abn`, `au_arn`, `bg_uic`, `bo_tin`, `br_cnpj`, `br_cpf`, `ca_bn`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `ca_qst`, `ch_vat`, `cl_tin`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eg_tin`, `es_cif`, `eu_oss_vat`, `eu_vat`, `gb_vat`, `ge_vat`, `hk_br`, `hu_tin`, `id_npwp`, `il_vat`, `in_gst`, `is_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `ke_pin`, `kr_brn`, `li_uid`, `mx_rfc`, `my_frp`, `my_itn`, `my_sst`, `no_vat`, `nz_gst`, `pe_ruc`, `ph_tin`, `ro_tin`, `rs_pib`, `ru_inn`, `ru_kpp`, `sa_vat`, `sg_gst`, `sg_uen`, `si_tin`, `sv_nit`, `th_vat`, `tr_tin`, `tw_vat`, `ua_vat`, `us_ein`, `uy_ruc`, `ve_rif`, `vn_tin`, or `za_vat`
 	Type *string `form:"type"`
 	// Value of the tax ID.
 	Value *string `form:"value"`
 }
 
-// Details about the customer you want to invoice or overrides for an existing customer.
+// Details about the customer you want to invoice or overrides for an existing customer. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
 type InvoiceUpcomingLinesCustomerDetailsParams struct {
 	// The customer's address.
 	Address *AddressParams `form:"address"`
@@ -623,9 +730,9 @@ type InvoiceUpcomingLinesInvoiceItemDiscountParams struct {
 
 // The period associated with this invoice item. When set to different values, the period will be rendered on the invoice. If you have [Stripe Revenue Recognition](https://stripe.com/docs/revenue-recognition) enabled, the period will be used to recognize and defer revenue. See the [Revenue Recognition documentation](https://stripe.com/docs/revenue-recognition/methodology/subscriptions-and-invoicing) for details.
 type InvoiceUpcomingLinesInvoiceItemPeriodParams struct {
-	// The end of the period, which must be greater than or equal to the start.
+	// The end of the period, which must be greater than or equal to the start. This value is inclusive.
 	End *int64 `form:"end"`
-	// The start of the period.
+	// The start of the period. This value is inclusive.
 	Start *int64 `form:"start"`
 }
 
@@ -635,7 +742,7 @@ type InvoiceUpcomingLinesInvoiceItemPriceDataParams struct {
 	Currency *string `form:"currency"`
 	// The ID of the product that this price will belong to.
 	Product *string `form:"product"`
-	// Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+	// Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
 	TaxBehavior *string `form:"tax_behavior"`
 	// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
 	UnitAmount *int64 `form:"unit_amount"`
@@ -667,7 +774,7 @@ type InvoiceUpcomingLinesInvoiceItemParams struct {
 	PriceData *InvoiceUpcomingLinesInvoiceItemPriceDataParams `form:"price_data"`
 	// Non-negative integer. The quantity of units for the invoice item.
 	Quantity *int64 `form:"quantity"`
-	// Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+	// Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
 	TaxBehavior *string `form:"tax_behavior"`
 	// A [tax code](https://stripe.com/docs/tax/tax-categories) ID.
 	TaxCode *string `form:"tax_code"`
@@ -681,7 +788,7 @@ type InvoiceUpcomingLinesInvoiceItemParams struct {
 
 // Define thresholds at which an invoice will be sent, and the subscription advanced to a new billing period. When updating, pass an empty string to remove previously-defined thresholds.
 type InvoiceUpcomingLinesSubscriptionItemBillingThresholdsParams struct {
-	// Usage threshold that triggers the subscription to advance to a new billing period
+	// Number of units that meets the billing threshold to advance the subscription to a new billing period (e.g., it takes 10 $5 units to meet a $50 [monetary threshold](https://stripe.com/docs/api/subscriptions/update#update_subscription-billing_thresholds-amount_gte))
 	UsageGTE *int64 `form:"usage_gte"`
 }
 
@@ -701,7 +808,7 @@ type InvoiceUpcomingLinesSubscriptionItemPriceDataParams struct {
 	Product *string `form:"product"`
 	// The recurring components of a price such as `interval` and `interval_count`.
 	Recurring *InvoiceUpcomingLinesSubscriptionItemPriceDataRecurringParams `form:"recurring"`
-	// Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
+	// Only required if a [default tax behavior](https://stripe.com/docs/tax/products-prices-tax-categories-tax-behavior#setting-a-default-tax-behavior-(recommended)) was not provided in the Stripe Tax settings. Specifies whether the price is considered inclusive of taxes or exclusive of taxes. One of `inclusive`, `exclusive`, or `unspecified`. Once specified as either `inclusive` or `exclusive`, it cannot be changed.
 	TaxBehavior *string `form:"tax_behavior"`
 	// A positive integer in cents (or local equivalent) (or 0 for a free price) representing how much to charge.
 	UnitAmount *int64 `form:"unit_amount"`
@@ -742,9 +849,9 @@ type InvoiceUpcomingLinesParams struct {
 	Coupon *string `form:"coupon"`
 	// The currency to preview this invoice in. Defaults to that of `customer` if not specified.
 	Currency *string `form:"currency"`
-	// The identifier of the customer whose upcoming invoice you'd like to retrieve.
+	// The identifier of the customer whose upcoming invoice you'd like to retrieve. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
 	Customer *string `form:"customer"`
-	// Details about the customer you want to invoice or overrides for an existing customer.
+	// Details about the customer you want to invoice or overrides for an existing customer. If `automatic_tax` is enabled then one of `customer`, `customer_details`, `subscription`, or `schedule` must be set.
 	CustomerDetails *InvoiceUpcomingLinesCustomerDetailsParams `form:"customer_details"`
 	// The coupons to redeem into discounts for the invoice preview. If not specified, inherits the discount from the customer or subscription. This only works for coupons directly applied to the invoice. To apply a coupon to a subscription, you must use the `coupon` parameter instead. Pass an empty string to avoid inheriting any discounts. To preview the upcoming invoice for a subscription that hasn't been created, use `coupon` instead.
 	Discounts []*InvoiceUpcomingLinesDiscountParams `form:"discounts"`
@@ -768,10 +875,12 @@ type InvoiceUpcomingLinesParams struct {
 	SubscriptionDefaultTaxRates []*string `form:"subscription_default_tax_rates"`
 	// A list of up to 20 subscription items, each with an attached price.
 	SubscriptionItems []*InvoiceUpcomingLinesSubscriptionItemParams `form:"subscription_items"`
-	// Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes.
+	// Determines how to handle [prorations](https://stripe.com/docs/subscriptions/billing-cycle#prorations) when the billing cycle changes (e.g., when switching plans, resetting `billing_cycle_anchor=now`, or starting a trial), or if an item's `quantity` changes. The default value is `create_prorations`.
 	SubscriptionProrationBehavior *string `form:"subscription_proration_behavior"`
-	// If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period, and cannot be before the subscription was on its current plan. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
+	// If previewing an update to a subscription, and doing proration, `subscription_proration_date` forces the proration to be calculated as though the update was done at the specified time. The time given must be within the current subscription period and within the current phase of the schedule backing this subscription, if the schedule exists. If set, `subscription`, and one of `subscription_items`, or `subscription_trial_end` are required. Also, `subscription_proration_behavior` cannot be set to 'none'.
 	SubscriptionProrationDate *int64 `form:"subscription_proration_date"`
+	// For paused subscriptions, setting `subscription_resume_at` to `now` will preview the invoice that will be generated if the subscription is resumed.
+	SubscriptionResumeAt *string `form:"subscription_resume_at"`
 	// Date a subscription is intended to start (can be future or past)
 	SubscriptionStartDate *int64 `form:"subscription_start_date"`
 	// If provided, the invoice returned will preview updating or creating a subscription with that trial end. If set, one of `subscription_items` or `subscription` is required.
@@ -792,6 +901,38 @@ func (i *InvoiceUpcomingLinesParams) AppendTo(body *form.Values, keyParts []stri
 	if BoolValue(i.SubscriptionTrialEndNow) {
 		body.Add(form.FormatKey(append(keyParts, "subscription_trial_end")), "now")
 	}
+}
+
+// Revise an existing invoice. The new invoice will be created in `status=draft`. See the [revision documentation](https://stripe.com/docs/invoicing/invoice-revisions) for more details.
+type InvoiceFromInvoiceParams struct {
+	// The relation between the new invoice and the original invoice. Currently, only 'revision' is permitted
+	Action *string `form:"action"`
+	// The `id` of the invoice that will be cloned.
+	Invoice *string `form:"invoice"`
+}
+
+// You can list all invoices, or list the invoices for a specific customer. The invoices are returned sorted by creation date, with the most recently created invoices appearing first.
+type InvoiceListParams struct {
+	ListParams `form:"*"`
+	// The collection method of the invoice to retrieve. Either `charge_automatically` or `send_invoice`.
+	CollectionMethod *string           `form:"collection_method"`
+	Created          *int64            `form:"created"`
+	CreatedRange     *RangeQueryParams `form:"created"`
+	// Only return invoices for the customer specified by this customer ID.
+	Customer     *string           `form:"customer"`
+	DueDate      *int64            `form:"due_date"`
+	DueDateRange *RangeQueryParams `form:"due_date"`
+	// The status of the invoice, one of `draft`, `open`, `paid`, `uncollectible`, or `void`. [Learn more](https://stripe.com/docs/billing/invoices/workflow#workflow-overview)
+	Status *string `form:"status"`
+	// Only return invoices for the subscription specified by this subscription ID.
+	Subscription *string `form:"subscription"`
+}
+
+// Stripe automatically finalizes drafts before sending and attempting payment on invoices. However, if you'd like to finalize a draft invoice manually, you can do so using this method.
+type InvoiceFinalizeInvoiceParams struct {
+	Params `form:"*"`
+	// Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
+	AutoAdvance *bool `form:"auto_advance"`
 }
 
 // Stripe will automatically send invoices to customers according to your [subscriptions settings](https://dashboard.stripe.com/account/billing/automatic). However, if you'd like to manually send an invoice to your customer out of the normal schedule, you can do so. When sending invoices that have already been paid, there will be no reference to the payment in the email.
@@ -833,7 +974,7 @@ type InvoiceCustomField struct {
 
 // The customer's tax IDs. Until the invoice is finalized, this field will contain the same tax IDs as `customer.tax_ids`. Once the invoice is finalized, this field will no longer be updated.
 type InvoiceCustomerTaxID struct {
-	// The type of the tax ID, one of `eu_vat`, `br_cnpj`, `br_cpf`, `eu_oss_vat`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
+	// The type of the tax ID, one of `ad_nrt`, `ar_cuit`, `eu_vat`, `bo_tin`, `br_cnpj`, `br_cpf`, `cn_tin`, `co_nit`, `cr_tin`, `do_rcn`, `ec_ruc`, `eu_oss_vat`, `pe_ruc`, `ro_tin`, `rs_pib`, `sv_nit`, `uy_ruc`, `ve_rif`, `vn_tin`, `gb_vat`, `nz_gst`, `au_abn`, `au_arn`, `in_gst`, `no_vat`, `za_vat`, `ch_vat`, `mx_rfc`, `sg_uen`, `ru_inn`, `ru_kpp`, `ca_bn`, `hk_br`, `es_cif`, `tw_vat`, `th_vat`, `jp_cn`, `jp_rn`, `jp_trn`, `li_uid`, `my_itn`, `us_ein`, `kr_brn`, `ca_qst`, `ca_gst_hst`, `ca_pst_bc`, `ca_pst_mb`, `ca_pst_sk`, `my_sst`, `sg_gst`, `ae_trn`, `cl_tin`, `sa_vat`, `id_npwp`, `my_frp`, `il_vat`, `ge_vat`, `ua_vat`, `is_vat`, `bg_uic`, `hu_tin`, `si_tin`, `ke_pin`, `tr_tin`, `eg_tin`, `ph_tin`, or `unknown`
 	Type *TaxIDType `json:"type"`
 	// The value of the tax ID.
 	Value string `json:"value"`
@@ -875,12 +1016,12 @@ type InvoicePaymentSettingsPaymentMethodOptionsCard struct {
 	RequestThreeDSecure InvoicePaymentSettingsPaymentMethodOptionsCardRequestThreeDSecure `json:"request_three_d_secure"`
 }
 type InvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransferEUBankTransfer struct {
-	// The desired country code of the bank account information. Permitted values include: `DE`, `ES`, `FR`, `IE`, or `NL`.
+	// The desired country code of the bank account information. Permitted values include: `BE`, `DE`, `ES`, `FR`, `IE`, or `NL`.
 	Country string `json:"country"`
 }
 type InvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransfer struct {
 	EUBankTransfer *InvoicePaymentSettingsPaymentMethodOptionsCustomerBalanceBankTransferEUBankTransfer `json:"eu_bank_transfer"`
-	// The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, or `mx_bank_transfer`.
+	// The bank transfer type that can be used for funding. Permitted values include: `eu_bank_transfer`, `gb_bank_transfer`, `jp_bank_transfer`, `mx_bank_transfer`, or `us_bank_transfer`.
 	Type string `json:"type"`
 }
 
@@ -934,6 +1075,34 @@ type InvoiceRenderingOptions struct {
 	// How line-item prices and amounts will be displayed with respect to tax on invoice PDFs.
 	AmountTaxDisplay string `json:"amount_tax_display"`
 }
+
+// The taxes applied to the shipping rate.
+type InvoiceShippingCostTax struct {
+	// Amount of tax applied for this rate.
+	Amount int64 `json:"amount"`
+	// Tax rates can be applied to [invoices](https://stripe.com/docs/billing/invoices/tax-rates), [subscriptions](https://stripe.com/docs/billing/subscriptions/taxes) and [Checkout Sessions](https://stripe.com/docs/payments/checkout/set-up-a-subscription#tax-rates) to collect tax.
+	//
+	// Related guide: [Tax rates](https://stripe.com/docs/billing/taxes/tax-rates)
+	Rate *TaxRate `json:"rate"`
+	// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+	TaxabilityReason InvoiceShippingCostTaxTaxabilityReason `json:"taxability_reason"`
+	// The amount on which tax is calculated, in cents (or local equivalent).
+	TaxableAmount int64 `json:"taxable_amount"`
+}
+
+// The details of the cost of shipping, including the ShippingRate applied on the invoice.
+type InvoiceShippingCost struct {
+	// Total shipping cost before any taxes are applied.
+	AmountSubtotal int64 `json:"amount_subtotal"`
+	// Total tax amount applied due to shipping costs. If no tax was applied, defaults to 0.
+	AmountTax int64 `json:"amount_tax"`
+	// Total shipping cost after taxes are applied.
+	AmountTotal int64 `json:"amount_total"`
+	// The ID of the ShippingRate for this invoice.
+	ShippingRate *ShippingRate `json:"shipping_rate"`
+	// The taxes applied to the shipping rate.
+	Taxes []*InvoiceShippingCostTax `json:"taxes"`
+}
 type InvoiceStatusTransitions struct {
 	// The time that the invoice draft was finalized.
 	FinalizedAt int64 `json:"finalized_at"`
@@ -943,6 +1112,12 @@ type InvoiceStatusTransitions struct {
 	PaidAt int64 `json:"paid_at"`
 	// The time that the invoice was voided.
 	VoidedAt int64 `json:"voided_at"`
+}
+
+// Details about the subscription that created this invoice.
+type InvoiceSubscriptionDetails struct {
+	// Set of [key-value pairs](https://stripe.com/docs/api/metadata) that will reflect the metadata of the subscription at the time of invoice creation. *Note: This attribute is populated only for invoices created on or after June 29, 2023.*
+	Metadata map[string]string `json:"metadata"`
 }
 
 // Indicates which line items triggered a threshold invoice.
@@ -961,7 +1136,7 @@ type InvoiceThresholdReason struct {
 
 // The aggregate amounts calculated per discount across all line items.
 type InvoiceTotalDiscountAmount struct {
-	// The amount, in %s, of the discount.
+	// The amount, in cents (or local equivalent), of the discount.
 	Amount int64 `json:"amount"`
 	// The discount that was applied to get this discount amount.
 	Discount *Discount `json:"discount"`
@@ -969,17 +1144,21 @@ type InvoiceTotalDiscountAmount struct {
 
 // The aggregate amounts calculated per tax rate for all line items.
 type InvoiceTotalTaxAmount struct {
-	// The amount, in %s, of the tax.
+	// The amount, in cents (or local equivalent), of the tax.
 	Amount int64 `json:"amount"`
 	// Whether this tax amount is inclusive or exclusive.
 	Inclusive bool `json:"inclusive"`
+	// The reasoning behind this tax, for example, if the product is tax exempt. The possible values for this field may be extended as new tax rules are supported.
+	TaxabilityReason InvoiceTotalTaxAmountTaxabilityReason `json:"taxability_reason"`
+	// The amount on which tax is calculated, in cents (or local equivalent).
+	TaxableAmount int64 `json:"taxable_amount"`
 	// The tax rate that was applied to get this tax amount.
 	TaxRate *TaxRate `json:"tax_rate"`
 }
 
 // The account (if any) the payment will be attributed to for tax reporting, and where funds from the payment will be transferred to for the invoice.
 type InvoiceTransferData struct {
-	// The amount in %s that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
+	// The amount in cents (or local equivalent) that will be transferred to the destination account when the invoice is paid. By default, the entire amount is transferred to the destination.
 	Amount int64 `json:"amount"`
 	// The account where funds from the payment will be transferred to upon payment success.
 	Destination *Account `json:"destination"`
@@ -994,7 +1173,7 @@ type InvoiceTransferData struct {
 // If your invoice is configured to be billed through automatic charges,
 // Stripe automatically finalizes your invoice and attempts payment. Note
 // that finalizing the invoice,
-// [when automatic](https://stripe.com/docs/billing/invoices/workflow/#auto_advance), does
+// [when automatic](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection), does
 // not happen immediately as the invoice is created. Stripe waits
 // until one hour after the last webhook was successfully sent (or the last
 // webhook timed out after failing). If you (and the platforms you may have
@@ -1016,7 +1195,7 @@ type InvoiceTransferData struct {
 // More details on the customer's credit balance are
 // [here](https://stripe.com/docs/billing/customer/balance).
 //
-// Related guide: [Send Invoices to Customers](https://stripe.com/docs/billing/invoices/sending).
+// Related guide: [Send invoices to customers](https://stripe.com/docs/billing/invoices/sending)
 type Invoice struct {
 	APIResource
 	// The country of the business associated with this invoice, most often the business creating the invoice.
@@ -1027,19 +1206,21 @@ type Invoice struct {
 	AccountTaxIDs []*TaxID `json:"account_tax_ids"`
 	// Final amount due at this time for this invoice. If the invoice's total is smaller than the minimum charge amount, for example, or if there is account credit that can be applied to the invoice, the `amount_due` may be 0. If there is a positive `starting_balance` for the invoice (the customer owes money), the `amount_due` will also take that into account. The charge that gets generated for the invoice will be for the amount specified in `amount_due`.
 	AmountDue int64 `json:"amount_due"`
-	// The amount, in %s, that was paid.
+	// The amount, in cents (or local equivalent), that was paid.
 	AmountPaid int64 `json:"amount_paid"`
-	// The difference between amount_due and amount_paid, in %s.
+	// The difference between amount_due and amount_paid, in cents (or local equivalent).
 	AmountRemaining int64 `json:"amount_remaining"`
+	// This is the sum of all the shipping amounts.
+	AmountShipping int64 `json:"amount_shipping"`
 	// ID of the Connect Application that created the invoice.
 	Application *Application `json:"application"`
-	// The fee in %s that will be applied to the invoice and transferred to the application owner's Stripe account when the invoice is paid.
+	// The fee in cents (or local equivalent) that will be applied to the invoice and transferred to the application owner's Stripe account when the invoice is paid.
 	ApplicationFeeAmount int64 `json:"application_fee_amount"`
 	// Number of payment attempts made for this invoice, from the perspective of the payment retry schedule. Any payment attempt counts as the first attempt, and subsequently only automatic retries increment the attempt count. In other words, manual payment attempts after the first attempt do not affect the retry schedule.
 	AttemptCount int64 `json:"attempt_count"`
 	// Whether an attempt has been made to pay the invoice. An invoice is not attempted until 1 hour after the `invoice.created` webhook, for example, so you might not want to display that invoice as unpaid to your users.
 	Attempted bool `json:"attempted"`
-	// Controls whether Stripe will perform [automatic collection](https://stripe.com/docs/billing/invoices/workflow/#auto_advance) of the invoice. When `false`, the invoice's state will not automatically advance without an explicit action.
+	// Controls whether Stripe performs [automatic collection](https://stripe.com/docs/invoicing/integration/automatic-advancement-collection) of the invoice. If `false`, the invoice's state doesn't automatically advance without an explicit action.
 	AutoAdvance  bool                 `json:"auto_advance"`
 	AutomaticTax *InvoiceAutomaticTax `json:"automatic_tax"`
 	// Indicates the reason why the invoice was created. `subscription_cycle` indicates an invoice created by a subscription advancing into a new period. `subscription_create` indicates an invoice created due to creating a subscription. `subscription_update` indicates an invoice created due to updating a subscription. `subscription` is set for all old invoices to indicate either a change to a subscription or a period advancement. `manual` is set for all invoices unrelated to a subscription (for example: created via the invoice editor). The `upcoming` value is reserved for simulated invoices per the upcoming invoice endpoint. `subscription_threshold` indicates an invoice created due to a billing threshold being reached.
@@ -1085,6 +1266,8 @@ type Invoice struct {
 	Discounts []*Discount `json:"discounts"`
 	// The date on which payment for this invoice is due. This value will be `null` for invoices where `collection_method=charge_automatically`.
 	DueDate int64 `json:"due_date"`
+	// The date when this invoice is in effect. Same as `finalized_at` unless overwritten. When defined, this value replaces the system-generated 'Date of issue' printed on the invoice PDF and receipt.
+	EffectiveAt int64 `json:"effective_at"`
 	// Ending customer balance after the invoice is finalized. Invoices are finalized approximately an hour after successful webhook delivery or when payment collection is attempted for the invoice. If the invoice has not been finalized yet, this will be null.
 	EndingBalance int64 `json:"ending_balance"`
 	// Footer displayed on the invoice.
@@ -1101,7 +1284,7 @@ type Invoice struct {
 	LastFinalizationError *Error `json:"last_finalization_error"`
 	// The ID of the most recent non-draft revision of this invoice
 	LatestRevision *Invoice `json:"latest_revision"`
-	// The individual line items that make up the invoice. `lines` is sorted as follows: invoice items in reverse chronological order, followed by the subscription, if any.
+	// The individual line items that make up the invoice. `lines` is sorted as follows: (1) pending invoice items (including prorations) in reverse chronological order, (2) subscription items in reverse chronological order, and (3) invoice items added after invoice creation in chronological order.
 	Lines *InvoiceLineItemList `json:"lines"`
 	// Has the value `true` if the object exists in live mode or the value `false` if the object exists in test mode.
 	Livemode bool `json:"livemode"`
@@ -1136,6 +1319,10 @@ type Invoice struct {
 	ReceiptNumber string `json:"receipt_number"`
 	// Options for invoice PDF rendering.
 	RenderingOptions *InvoiceRenderingOptions `json:"rendering_options"`
+	// The details of the cost of shipping, including the ShippingRate applied on the invoice.
+	ShippingCost *InvoiceShippingCost `json:"shipping_cost"`
+	// Shipping details for the invoice. The Invoice PDF will use the `shipping_details` value if it is set, otherwise the PDF will render the shipping address from the customer.
+	ShippingDetails *ShippingDetails `json:"shipping_details"`
 	// Starting customer balance before the invoice is finalized. If the invoice has not been finalized yet, this will be the current customer balance. For revision invoices, this also includes any customer balance that was applied to the original invoice.
 	StartingBalance int64 `json:"starting_balance"`
 	// Extra information about an invoice for the customer's credit card statement.
@@ -1145,11 +1332,13 @@ type Invoice struct {
 	StatusTransitions *InvoiceStatusTransitions `json:"status_transitions"`
 	// The subscription that this invoice was prepared for, if any.
 	Subscription *Subscription `json:"subscription"`
+	// Details about the subscription that created this invoice.
+	SubscriptionDetails *InvoiceSubscriptionDetails `json:"subscription_details"`
 	// Only set for upcoming invoices that preview prorations. The time used to calculate prorations.
 	SubscriptionProrationDate int64 `json:"subscription_proration_date"`
 	// Total of all subscriptions, invoice items, and prorations on the invoice before any invoice level discount or exclusive tax is applied. Item discounts are already incorporated
 	Subtotal int64 `json:"subtotal"`
-	// The integer amount in %s representing the subtotal of the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
+	// The integer amount in cents (or local equivalent) representing the subtotal of the invoice before any invoice level discount or tax is applied. Item discounts are already incorporated
 	SubtotalExcludingTax int64 `json:"subtotal_excluding_tax"`
 	// The amount of tax on this invoice. This is the sum of all the tax amounts on this invoice.
 	Tax int64 `json:"tax"`
@@ -1160,7 +1349,7 @@ type Invoice struct {
 	Total int64 `json:"total"`
 	// The aggregate amounts calculated per discount across all line items.
 	TotalDiscountAmounts []*InvoiceTotalDiscountAmount `json:"total_discount_amounts"`
-	// The integer amount in %s representing the total amount of the invoice including all discounts but excluding all tax.
+	// The integer amount in cents (or local equivalent) representing the total amount of the invoice including all discounts but excluding all tax.
 	TotalExcludingTax int64 `json:"total_excluding_tax"`
 	// The aggregate amounts calculated per tax rate for all line items.
 	TotalTaxAmounts []*InvoiceTotalTaxAmount `json:"total_tax_amounts"`
