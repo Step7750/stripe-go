@@ -108,10 +108,18 @@ type SetupAttemptListParams struct {
 	// can be a string with an integer Unix timestamp, or it can be a
 	// dictionary with a number of different query options.
 	CreatedRange *RangeQueryParams `form:"created"`
+	// Specifies which fields in the response should be expanded.
+	Expand []*string `form:"expand"`
 	// Only return SetupAttempts created by the SetupIntent specified by
 	// this ID.
 	SetupIntent *string `form:"setup_intent"`
 }
+
+// AddExpand appends a new field to expand.
+func (p *SetupAttemptListParams) AddExpand(f string) {
+	p.Expand = append(p.Expand, &f)
+}
+
 type SetupAttemptPaymentMethodDetailsACSSDebit struct{}
 type SetupAttemptPaymentMethodDetailsAUBECSDebit struct{}
 type SetupAttemptPaymentMethodDetailsBACSDebit struct{}
@@ -135,7 +143,6 @@ type SetupAttemptPaymentMethodDetailsBancontact struct {
 	// (if supported) at the time of authorization or settlement. They cannot be set or mutated.
 	VerifiedName string `json:"verified_name"`
 }
-type SetupAttemptPaymentMethodDetailsBLIK struct{}
 type SetupAttemptPaymentMethodDetailsBoleto struct{}
 
 // Check results by Card networks on Card address and CVC at the time of authorization
@@ -186,7 +193,7 @@ type SetupAttemptPaymentMethodDetailsCard struct {
 	ExpYear int64 `json:"exp_year"`
 	// Uniquely identifies this particular card number. You can use this attribute to check whether two customers who've signed up with you are using the same card number, for example. For payment methods that tokenize card information (Apple Pay, Google Pay), the tokenized number might be provided instead of the underlying card number.
 	//
-	// *Starting May 1, 2021, card fingerprint in India for Connect will change to allow two fingerprints for the same card --- one for India and one for the rest of the world.*
+	// *As of May 1, 2021, card fingerprint in India for Connect changed to allow two fingerprints for the same card---one for India and one for the rest of the world.*
 	Fingerprint string `json:"fingerprint"`
 	// Card funding type. Can be `credit`, `debit`, `prepaid`, or `unknown`.
 	Funding string `json:"funding"`
@@ -253,7 +260,6 @@ type SetupAttemptPaymentMethodDetails struct {
 	AUBECSDebit *SetupAttemptPaymentMethodDetailsAUBECSDebit `json:"au_becs_debit"`
 	BACSDebit   *SetupAttemptPaymentMethodDetailsBACSDebit   `json:"bacs_debit"`
 	Bancontact  *SetupAttemptPaymentMethodDetailsBancontact  `json:"bancontact"`
-	BLIK        *SetupAttemptPaymentMethodDetailsBLIK        `json:"blik"`
 	Boleto      *SetupAttemptPaymentMethodDetailsBoleto      `json:"boleto"`
 	Card        *SetupAttemptPaymentMethodDetailsCard        `json:"card"`
 	CardPresent *SetupAttemptPaymentMethodDetailsCardPresent `json:"card_present"`

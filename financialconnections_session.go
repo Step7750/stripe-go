@@ -26,6 +26,15 @@ const (
 	FinancialConnectionsSessionPermissionTransactions  FinancialConnectionsSessionPermission = "transactions"
 )
 
+// Data features requested to be retrieved upon account creation.
+type FinancialConnectionsSessionPrefetch string
+
+// List of values that FinancialConnectionsSessionPrefetch can take
+const (
+	FinancialConnectionsSessionPrefetchBalances  FinancialConnectionsSessionPrefetch = "balances"
+	FinancialConnectionsSessionPrefetchOwnership FinancialConnectionsSessionPrefetch = "ownership"
+)
+
 // The account holder to link accounts for.
 type FinancialConnectionsSessionAccountHolderParams struct {
 	// The ID of the Stripe account whose accounts will be retrieved. Should only be present if `type` is `account`.
@@ -47,14 +56,23 @@ type FinancialConnectionsSessionParams struct {
 	Params `form:"*"`
 	// The account holder to link accounts for.
 	AccountHolder *FinancialConnectionsSessionAccountHolderParams `form:"account_holder"`
+	// Specifies which fields in the response should be expanded.
+	Expand []*string `form:"expand"`
 	// Filters to restrict the kinds of accounts to collect.
 	Filters *FinancialConnectionsSessionFiltersParams `form:"filters"`
 	// List of data features that you would like to request access to.
 	//
 	// Possible values are `balances`, `transactions`, `ownership`, and `payment_method`.
 	Permissions []*string `form:"permissions"`
+	// List of data features that you would like to retrieve upon account creation.
+	Prefetch []*string `form:"prefetch"`
 	// For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
 	ReturnURL *string `form:"return_url"`
+}
+
+// AddExpand appends a new field to expand.
+func (p *FinancialConnectionsSessionParams) AddExpand(f string) {
+	p.Expand = append(p.Expand, &f)
 }
 
 // The account holder for whom accounts are collected in this session.
@@ -89,6 +107,8 @@ type FinancialConnectionsSession struct {
 	Object string `json:"object"`
 	// Permissions requested for accounts collected during this session.
 	Permissions []FinancialConnectionsSessionPermission `json:"permissions"`
+	// Data features requested to be retrieved upon account creation.
+	Prefetch []FinancialConnectionsSessionPrefetch `json:"prefetch"`
 	// For webview integrations only. Upon completing OAuth login in the native browser, the user will be redirected to this URL to return to your app.
 	ReturnURL string `json:"return_url"`
 }
