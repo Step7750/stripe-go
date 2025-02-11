@@ -11,6 +11,7 @@ import (
 	stripe "github.com/stripe/stripe-go/v75"
 	"github.com/stripe/stripe-go/v75/account"
 	"github.com/stripe/stripe-go/v75/accountlink"
+	"github.com/stripe/stripe-go/v75/accountsession"
 	"github.com/stripe/stripe-go/v75/applepaydomain"
 	"github.com/stripe/stripe-go/v75/applicationfee"
 	appssecret "github.com/stripe/stripe-go/v75/apps/secret"
@@ -53,6 +54,7 @@ import (
 	"github.com/stripe/stripe-go/v75/paymentintent"
 	"github.com/stripe/stripe-go/v75/paymentlink"
 	"github.com/stripe/stripe-go/v75/paymentmethod"
+	"github.com/stripe/stripe-go/v75/paymentmethoddomain"
 	"github.com/stripe/stripe-go/v75/paymentsource"
 	"github.com/stripe/stripe-go/v75/payout"
 	"github.com/stripe/stripe-go/v75/person"
@@ -122,6 +124,8 @@ type API struct {
 	AccountLinks *accountlink.Client
 	// Accounts is the client used to invoke /accounts APIs.
 	Accounts *account.Client
+	// AccountSessions is the client used to invoke /account_sessions APIs.
+	AccountSessions *accountsession.Client
 	// ApplePayDomains is the client used to invoke /apple_pay/domains APIs.
 	ApplePayDomains *applepaydomain.Client
 	// ApplicationFees is the client used to invoke /application_fees APIs.
@@ -204,6 +208,8 @@ type API struct {
 	PaymentIntents *paymentintent.Client
 	// PaymentLinks is the client used to invoke /payment_links APIs.
 	PaymentLinks *paymentlink.Client
+	// PaymentMethodDomains is the client used to invoke /payment_method_domains APIs.
+	PaymentMethodDomains *paymentmethoddomain.Client
 	// PaymentMethods is the client used to invoke /payment_methods APIs.
 	PaymentMethods *paymentmethod.Client
 	// PaymentSources is the client used to invoke /customers/{customer}/sources APIs.
@@ -342,6 +348,7 @@ func (a *API) Init(key string, backends *stripe.Backends) {
 
 	a.AccountLinks = &accountlink.Client{B: backends.API, Key: key}
 	a.Accounts = &account.Client{B: backends.API, Key: key}
+	a.AccountSessions = &accountsession.Client{B: backends.API, Key: key}
 	a.ApplePayDomains = &applepaydomain.Client{B: backends.API, Key: key}
 	a.ApplicationFees = &applicationfee.Client{B: backends.API, Key: key}
 	a.AppsSecrets = &appssecret.Client{B: backends.API, Key: key}
@@ -383,6 +390,7 @@ func (a *API) Init(key string, backends *stripe.Backends) {
 	a.OAuth = &oauth.Client{B: backends.Connect, Key: key}
 	a.PaymentIntents = &paymentintent.Client{B: backends.API, Key: key}
 	a.PaymentLinks = &paymentlink.Client{B: backends.API, Key: key}
+	a.PaymentMethodDomains = &paymentmethoddomain.Client{B: backends.API, Key: key}
 	a.PaymentMethods = &paymentmethod.Client{B: backends.API, Key: key}
 	a.PaymentSources = &paymentsource.Client{B: backends.API, Key: key}
 	a.Payouts = &payout.Client{B: backends.API, Key: key}

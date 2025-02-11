@@ -1,5 +1,27 @@
 # Changelog
 
+## 75.5.0 - 2023-09-13
+* [#1735](https://github.com/stripe/stripe-go/pull/1735) Bugfix: point files.New back to files.stripe.com
+* [#1731](https://github.com/stripe/stripe-go/pull/1731) Delay calculation of Stripe-User-Agent
+
+## 75.4.0 - 2023-09-07
+* [#1724](https://github.com/stripe/stripe-go/pull/1724) Update generated code
+  * Add support for new resource `PaymentMethodDomain`
+  * Add support for `Get`, `List`, `New`, `Update`, and `Validate` methods on resource `PaymentMethodDomain`
+  * Add support for new value `n26` on enums `ChargePaymentMethodDetailsIdealBank`, `PaymentMethodIdealBank`, and `SetupAttemptPaymentMethodDetailsIdealBank`
+  * Add support for new value `NTSBDEB1` on enums `ChargePaymentMethodDetailsIdealBic`, `PaymentMethodIdealBic`, and `SetupAttemptPaymentMethodDetailsIdealBic`
+  * Add support for new values `treasury.credit_reversal.created`, `treasury.credit_reversal.posted`, `treasury.debit_reversal.completed`, `treasury.debit_reversal.created`, `treasury.debit_reversal.initial_credit_granted`, `treasury.financial_account.closed`, `treasury.financial_account.created`, `treasury.financial_account.features_status_updated`, `treasury.inbound_transfer.canceled`, `treasury.inbound_transfer.created`, `treasury.inbound_transfer.failed`, `treasury.inbound_transfer.succeeded`, `treasury.outbound_payment.canceled`, `treasury.outbound_payment.created`, `treasury.outbound_payment.expected_arrival_date_updated`, `treasury.outbound_payment.failed`, `treasury.outbound_payment.posted`, `treasury.outbound_payment.returned`, `treasury.outbound_transfer.canceled`, `treasury.outbound_transfer.created`, `treasury.outbound_transfer.expected_arrival_date_updated`, `treasury.outbound_transfer.failed`, `treasury.outbound_transfer.posted`, `treasury.outbound_transfer.returned`, `treasury.received_credit.created`, `treasury.received_credit.failed`, `treasury.received_credit.succeeded`, and `treasury.received_debit.created` on enum `EventType`
+  * Remove support for value `invoiceitem.updated` from enum `EventType`
+  * Add support for `Features` on `ProductParams` and `Product`
+
+## 75.3.0 - 2023-08-31
+* [#1722](https://github.com/stripe/stripe-go/pull/1722) Update generated code
+  * Add support for new resource `AccountSession`
+  * Add support for `New` method on resource `AccountSession`
+  * Add support for new values `obligation_inbound`, `obligation_outbound`, `obligation_payout_failure`, `obligation_payout`, `obligation_reversal_inbound`, and `obligation_reversal_outbound` on enum `BalanceTransactionType`
+  * Change type of `EventType` from `string` to `enum`
+  * Add support for `Application` on `PaymentLink`
+
 ## 75.2.0 - 2023-08-24
 * [#1718](https://github.com/stripe/stripe-go/pull/1718) Update generated code
   * Add support for `Retention` on `BillingPortalSessionFlowDataSubscriptionCancelParams` and `BillingPortalSessionFlowSubscriptionCancel`

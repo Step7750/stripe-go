@@ -337,7 +337,7 @@ type PersonFutureRequirementsError struct {
 	Requirement string `json:"requirement"`
 }
 
-// Information about the upcoming new requirements for this person, including what information needs to be collected, and by when.
+// Information about the [upcoming new requirements for this person](https://stripe.com/docs/connect/custom-accounts/future-requirements), including what information needs to be collected, and by when.
 type PersonFutureRequirements struct {
 	// Fields that are due and can be satisfied by providing the corresponding alternative fields instead.
 	Alternatives []*PersonFutureRequirementsAlternative `json:"alternatives"`
@@ -443,13 +443,13 @@ type Person struct {
 	FirstNameKanji string `json:"first_name_kanji"`
 	// A list of alternate names or aliases that the person is known by.
 	FullNameAliases []string `json:"full_name_aliases"`
-	// Information about the upcoming new requirements for this person, including what information needs to be collected, and by when.
+	// Information about the [upcoming new requirements for this person](https://stripe.com/docs/connect/custom-accounts/future-requirements), including what information needs to be collected, and by when.
 	FutureRequirements *PersonFutureRequirements `json:"future_requirements"`
 	// The person's gender (International regulations require either "male" or "female").
 	Gender string `json:"gender"`
 	// Unique identifier for the object.
 	ID string `json:"id"`
-	// Whether the person's `id_number` was provided.
+	// Whether the person's `id_number` was provided. True if either the full ID number was provided or if only the required part of the ID number was provided (ex. last four of an individual's SSN for the US indicated by `ssn_last_4_provided`).
 	IDNumberProvided bool `json:"id_number_provided"`
 	// Whether the person's `id_number_secondary` was provided.
 	IDNumberSecondaryProvided bool `json:"id_number_secondary_provided"`

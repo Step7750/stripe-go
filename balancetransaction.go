@@ -45,22 +45,23 @@ type BalanceTransactionSourceType string
 
 // List of values that BalanceTransactionSourceType can take
 const (
-	BalanceTransactionSourceTypeApplicationFee            BalanceTransactionSourceType = "application_fee"
-	BalanceTransactionSourceTypeCharge                    BalanceTransactionSourceType = "charge"
-	BalanceTransactionSourceTypeConnectCollectionTransfer BalanceTransactionSourceType = "connect_collection_transfer"
-	BalanceTransactionSourceTypeDispute                   BalanceTransactionSourceType = "dispute"
-	BalanceTransactionSourceTypeFeeRefund                 BalanceTransactionSourceType = "fee_refund"
-	BalanceTransactionSourceTypeIssuingAuthorization      BalanceTransactionSourceType = "issuing.authorization"
-	BalanceTransactionSourceTypeIssuingDispute            BalanceTransactionSourceType = "issuing.dispute"
-	BalanceTransactionSourceTypeIssuingTransaction        BalanceTransactionSourceType = "issuing.transaction"
-	BalanceTransactionSourceTypePayout                    BalanceTransactionSourceType = "payout"
-	BalanceTransactionSourceTypePlatformTaxFee            BalanceTransactionSourceType = "platform_tax_fee"
-	BalanceTransactionSourceTypeRefund                    BalanceTransactionSourceType = "refund"
-	BalanceTransactionSourceTypeReserveTransaction        BalanceTransactionSourceType = "reserve_transaction"
-	BalanceTransactionSourceTypeTaxDeductedAtSource       BalanceTransactionSourceType = "tax_deducted_at_source"
-	BalanceTransactionSourceTypeTopup                     BalanceTransactionSourceType = "topup"
-	BalanceTransactionSourceTypeTransfer                  BalanceTransactionSourceType = "transfer"
-	BalanceTransactionSourceTypeTransferReversal          BalanceTransactionSourceType = "transfer_reversal"
+	BalanceTransactionSourceTypeApplicationFee                 BalanceTransactionSourceType = "application_fee"
+	BalanceTransactionSourceTypeCharge                         BalanceTransactionSourceType = "charge"
+	BalanceTransactionSourceTypeConnectCollectionTransfer      BalanceTransactionSourceType = "connect_collection_transfer"
+	BalanceTransactionSourceTypeCustomerCashBalanceTransaction BalanceTransactionSourceType = "customer_cash_balance_transaction"
+	BalanceTransactionSourceTypeDispute                        BalanceTransactionSourceType = "dispute"
+	BalanceTransactionSourceTypeFeeRefund                      BalanceTransactionSourceType = "fee_refund"
+	BalanceTransactionSourceTypeIssuingAuthorization           BalanceTransactionSourceType = "issuing.authorization"
+	BalanceTransactionSourceTypeIssuingDispute                 BalanceTransactionSourceType = "issuing.dispute"
+	BalanceTransactionSourceTypeIssuingTransaction             BalanceTransactionSourceType = "issuing.transaction"
+	BalanceTransactionSourceTypePayout                         BalanceTransactionSourceType = "payout"
+	BalanceTransactionSourceTypePlatformTaxFee                 BalanceTransactionSourceType = "platform_tax_fee"
+	BalanceTransactionSourceTypeRefund                         BalanceTransactionSourceType = "refund"
+	BalanceTransactionSourceTypeReserveTransaction             BalanceTransactionSourceType = "reserve_transaction"
+	BalanceTransactionSourceTypeTaxDeductedAtSource            BalanceTransactionSourceType = "tax_deducted_at_source"
+	BalanceTransactionSourceTypeTopup                          BalanceTransactionSourceType = "topup"
+	BalanceTransactionSourceTypeTransfer                       BalanceTransactionSourceType = "transfer"
+	BalanceTransactionSourceTypeTransferReversal               BalanceTransactionSourceType = "transfer_reversal"
 )
 
 // If the transaction's net funds are available in the Stripe balance yet. Either `available` or `pending`.
@@ -72,7 +73,7 @@ const (
 	BalanceTransactionStatusPending   BalanceTransactionStatus = "pending"
 )
 
-// Transaction type: `adjustment`, `advance`, `advance_funding`, `anticipation_repayment`, `application_fee`, `application_fee_refund`, `charge`, `connect_collection_transfer`, `contribution`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_dispute`, `issuing_transaction`, `payment`, `payment_failure_refund`, `payment_refund`, `payment_reversal`, `payout`, `payout_cancel`, `payout_failure`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`. [Learn more](https://stripe.com/docs/reports/balance-transaction-types) about balance transaction types and what they represent. If you are looking to classify transactions for accounting purposes, you might want to consider `reporting_category` instead.
+// Transaction type: `adjustment`, `advance`, `advance_funding`, `anticipation_repayment`, `application_fee`, `application_fee_refund`, `charge`, `connect_collection_transfer`, `contribution`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_dispute`, `issuing_transaction`, `obligation_inbound`, `obligation_outbound`, `obligation_reversal_inbound`, `obligation_reversal_outbound`, `obligation_payout`, `obligation_payout_failure`, `payment`, `payment_failure_refund`, `payment_refund`, `payment_reversal`, `payout`, `payout_cancel`, `payout_failure`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`. [Learn more](https://stripe.com/docs/reports/balance-transaction-types) about balance transaction types and what they represent. If you are looking to classify transactions for accounting purposes, you might want to consider `reporting_category` instead.
 type BalanceTransactionType string
 
 // List of values that BalanceTransactionType can take
@@ -90,6 +91,12 @@ const (
 	BalanceTransactionTypeIssuingAuthorizationRelease BalanceTransactionType = "issuing_authorization_release"
 	BalanceTransactionTypeIssuingDispute              BalanceTransactionType = "issuing_dispute"
 	BalanceTransactionTypeIssuingTransaction          BalanceTransactionType = "issuing_transaction"
+	BalanceTransactionTypeObligationInbound           BalanceTransactionType = "obligation_inbound"
+	BalanceTransactionTypeObligationOutbound          BalanceTransactionType = "obligation_outbound"
+	BalanceTransactionTypeObligationPayout            BalanceTransactionType = "obligation_payout"
+	BalanceTransactionTypeObligationPayoutFailure     BalanceTransactionType = "obligation_payout_failure"
+	BalanceTransactionTypeObligationReversalInbound   BalanceTransactionType = "obligation_reversal_inbound"
+	BalanceTransactionTypeObligationReversalOutbound  BalanceTransactionType = "obligation_reversal_outbound"
 	BalanceTransactionTypePayment                     BalanceTransactionType = "payment"
 	BalanceTransactionTypePaymentFailureRefund        BalanceTransactionType = "payment_failure_refund"
 	BalanceTransactionTypePaymentRefund               BalanceTransactionType = "payment_refund"
@@ -127,7 +134,7 @@ type BalanceTransactionListParams struct {
 	Payout *string `form:"payout"`
 	// Only returns the original transaction.
 	Source *string `form:"source"`
-	// Only returns transactions of the given type. One of: `adjustment`, `advance`, `advance_funding`, `anticipation_repayment`, `application_fee`, `application_fee_refund`, `charge`, `connect_collection_transfer`, `contribution`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_dispute`, `issuing_transaction`, `payment`, `payment_failure_refund`, `payment_refund`, `payment_reversal`, `payout`, `payout_cancel`, `payout_failure`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`.
+	// Only returns transactions of the given type. One of: `adjustment`, `advance`, `advance_funding`, `anticipation_repayment`, `application_fee`, `application_fee_refund`, `charge`, `connect_collection_transfer`, `contribution`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_dispute`, `issuing_transaction`, `obligation_inbound`, `obligation_outbound`, `obligation_reversal_inbound`, `obligation_reversal_outbound`, `obligation_payout`, `obligation_payout_failure`, `payment`, `payment_failure_refund`, `payment_refund`, `payment_reversal`, `payout`, `payout_cancel`, `payout_failure`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`.
 	Type *string `form:"type"`
 }
 
@@ -198,29 +205,30 @@ type BalanceTransaction struct {
 	Source *BalanceTransactionSource `json:"source"`
 	// If the transaction's net funds are available in the Stripe balance yet. Either `available` or `pending`.
 	Status BalanceTransactionStatus `json:"status"`
-	// Transaction type: `adjustment`, `advance`, `advance_funding`, `anticipation_repayment`, `application_fee`, `application_fee_refund`, `charge`, `connect_collection_transfer`, `contribution`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_dispute`, `issuing_transaction`, `payment`, `payment_failure_refund`, `payment_refund`, `payment_reversal`, `payout`, `payout_cancel`, `payout_failure`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`. [Learn more](https://stripe.com/docs/reports/balance-transaction-types) about balance transaction types and what they represent. If you are looking to classify transactions for accounting purposes, you might want to consider `reporting_category` instead.
+	// Transaction type: `adjustment`, `advance`, `advance_funding`, `anticipation_repayment`, `application_fee`, `application_fee_refund`, `charge`, `connect_collection_transfer`, `contribution`, `issuing_authorization_hold`, `issuing_authorization_release`, `issuing_dispute`, `issuing_transaction`, `obligation_inbound`, `obligation_outbound`, `obligation_reversal_inbound`, `obligation_reversal_outbound`, `obligation_payout`, `obligation_payout_failure`, `payment`, `payment_failure_refund`, `payment_refund`, `payment_reversal`, `payout`, `payout_cancel`, `payout_failure`, `refund`, `refund_failure`, `reserve_transaction`, `reserved_funds`, `stripe_fee`, `stripe_fx_fee`, `tax_fee`, `topup`, `topup_reversal`, `transfer`, `transfer_cancel`, `transfer_failure`, or `transfer_refund`. [Learn more](https://stripe.com/docs/reports/balance-transaction-types) about balance transaction types and what they represent. If you are looking to classify transactions for accounting purposes, you might want to consider `reporting_category` instead.
 	Type BalanceTransactionType `json:"type"`
 }
 type BalanceTransactionSource struct {
 	ID   string                       `json:"id"`
 	Type BalanceTransactionSourceType `json:"object"`
 
-	ApplicationFee            *ApplicationFee            `json:"-"`
-	Charge                    *Charge                    `json:"-"`
-	ConnectCollectionTransfer *ConnectCollectionTransfer `json:"-"`
-	Dispute                   *Dispute                   `json:"-"`
-	FeeRefund                 *FeeRefund                 `json:"-"`
-	IssuingAuthorization      *IssuingAuthorization      `json:"-"`
-	IssuingDispute            *IssuingDispute            `json:"-"`
-	IssuingTransaction        *IssuingTransaction        `json:"-"`
-	Payout                    *Payout                    `json:"-"`
-	PlatformTaxFee            *PlatformTaxFee            `json:"-"`
-	Refund                    *Refund                    `json:"-"`
-	ReserveTransaction        *ReserveTransaction        `json:"-"`
-	TaxDeductedAtSource       *TaxDeductedAtSource       `json:"-"`
-	Topup                     *Topup                     `json:"-"`
-	Transfer                  *Transfer                  `json:"-"`
-	TransferReversal          *TransferReversal          `json:"-"`
+	ApplicationFee                 *ApplicationFee                 `json:"-"`
+	Charge                         *Charge                         `json:"-"`
+	ConnectCollectionTransfer      *ConnectCollectionTransfer      `json:"-"`
+	CustomerCashBalanceTransaction *CustomerCashBalanceTransaction `json:"-"`
+	Dispute                        *Dispute                        `json:"-"`
+	FeeRefund                      *FeeRefund                      `json:"-"`
+	IssuingAuthorization           *IssuingAuthorization           `json:"-"`
+	IssuingDispute                 *IssuingDispute                 `json:"-"`
+	IssuingTransaction             *IssuingTransaction             `json:"-"`
+	Payout                         *Payout                         `json:"-"`
+	PlatformTaxFee                 *PlatformTaxFee                 `json:"-"`
+	Refund                         *Refund                         `json:"-"`
+	ReserveTransaction             *ReserveTransaction             `json:"-"`
+	TaxDeductedAtSource            *TaxDeductedAtSource            `json:"-"`
+	Topup                          *Topup                          `json:"-"`
+	Transfer                       *Transfer                       `json:"-"`
+	TransferReversal               *TransferReversal               `json:"-"`
 }
 
 // BalanceTransactionList is a list of BalanceTransactions as retrieved from a list endpoint.
@@ -274,6 +282,8 @@ func (b *BalanceTransactionSource) UnmarshalJSON(data []byte) error {
 		err = json.Unmarshal(data, &b.Charge)
 	case BalanceTransactionSourceTypeConnectCollectionTransfer:
 		err = json.Unmarshal(data, &b.ConnectCollectionTransfer)
+	case BalanceTransactionSourceTypeCustomerCashBalanceTransaction:
+		err = json.Unmarshal(data, &b.CustomerCashBalanceTransaction)
 	case BalanceTransactionSourceTypeDispute:
 		err = json.Unmarshal(data, &b.Dispute)
 	case BalanceTransactionSourceTypeFeeRefund:
